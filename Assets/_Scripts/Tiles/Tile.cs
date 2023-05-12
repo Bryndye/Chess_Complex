@@ -9,16 +9,13 @@ public enum TileType
     Shop
 }
 
-public enum TileTState
-{
-    Unused,
-    Used
-}
 public class Tile : MonoBehaviour
 {
+    [Header("Parameters")]
     public TileType MyType;
-    public TileTState MyState = TileTState.Unused;
     public Vector2 MyPosition;
+    public bool EffectUsed = false;
+    public bool PlaceTaken = false;
 
     private MeshRenderer myMeshRenderer;
     private Color originalColor;

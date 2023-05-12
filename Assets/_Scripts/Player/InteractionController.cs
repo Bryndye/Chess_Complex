@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InteractionController : MonoBehaviour
 {
+    public PlayerController playerTEST; // VAR TEST A SUPPRIMER
+
     void Update()
     {
         mouseIntoWorld();
@@ -22,6 +24,8 @@ public class InteractionController : MonoBehaviour
                 if (clickedObject.TryGetComponent(out Tile _tile))
                 {
                     //_tile.ChangerMyMaterial();
+                    // FCT TEST PLAYER
+                    playerTEST.SetItemOnTile(_tile);
                 }
 
                 // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :
