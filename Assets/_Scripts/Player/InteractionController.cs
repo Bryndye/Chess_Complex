@@ -11,20 +11,21 @@ public class InteractionController : MonoBehaviour
 
     private void mouseIntoWorld()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
+        if (Input.GetMouseButtonDown(0))
         {
-            GameObject clickedObject = hit.collider.gameObject;
-            if (clickedObject.TryGetComponent(out Tile _tile))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                _tile.ChangerMyMaterial();
-                if (Input.GetMouseButtonDown(0)) // Vérifie le clic gauche de la souris
+                GameObject clickedObject = hit.collider.gameObject;
+                if (clickedObject.TryGetComponent(out Tile _tile))
                 {
-                    // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :
-                    Debug.Log("Objet cliqué : " + clickedObject.name);
+                    //_tile.ChangerMyMaterial();
                 }
+
+                // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :
+                Debug.Log("Objet cliqué : " + clickedObject.name);
             }
         }
     }
