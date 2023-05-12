@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InteractionController : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class InteractionController : MonoBehaviour
 
     private void mouseIntoWorld()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // La souris est sur un objet UI, ignorer le raycast pour les objets 3D
+            Debug.Log("UI entre souris et 3D");
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -29,7 +37,7 @@ public class InteractionController : MonoBehaviour
                 }
 
                 // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :
-                Debug.Log("Objet cliqué : " + clickedObject.name);
+                //Debug.Log("Objet cliqué : " + clickedObject.name);
             }
         }
     }

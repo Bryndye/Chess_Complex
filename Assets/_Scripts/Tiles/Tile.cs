@@ -26,22 +26,16 @@ public class Tile : MonoBehaviour
         originalColor = myMeshRenderer.material.color;
     }
 
-    public void TouchedByMouse()
-    {
-        Debug.Log("Has been touched " + MyPosition);
-
-    }
-
     public void ChangerMyMaterial(Color color)
     {
-        Debug.Log("changed material ");
+        //Debug.Log("changed material ");
         myMeshRenderer.material.color = color;
     }
 
     private void OnMouseEnter()
     {
         // Code exécuté lorsque la souris entre dans le collider de l'objet
-        Debug.Log("Souris entrée sur l'objet : " + gameObject.name);
+        //Debug.Log("Souris entrée sur l'objet : " + gameObject.name);
         ChangerMyMaterial(Color.red);
     }
 
