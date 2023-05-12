@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8913431488173905408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98f158a0cf18214f8a2f654765a4edc, type: 3}
+  m_Script: {fileID: 11500000, guid: 05208e4253f550c4b9ed984b526f7b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   anchorCamera: {fileID: 8913431488173905411}
