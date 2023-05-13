@@ -10,6 +10,9 @@ public enum Turn
 }
 public class TurnController : MonoBehaviour
 {
+    public static TurnController instance;
+    private PlayerInterface playerInterface;
+
     public Turn CurrentTurn = Turn.Player2;
     public int TurnCount = 0;
 
@@ -19,7 +22,18 @@ public class TurnController : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+    }
+
+    private void Start()
+    {
+        playerInterface = PlayerInterface.instance;
         NextTurn();
+    }
+
+    public bool Player1Turn()
+    {
+        return CurrentTurn == Turn.Player1;
     }
 
     public void NextTurn()
@@ -33,5 +47,7 @@ public class TurnController : MonoBehaviour
 
         currentTurnText.text = CurrentTurn.ToString();
         turnCountText.text = TurnCount.ToString();
+
+        playerInterface.NextTurnSetInterface();
     }
 }

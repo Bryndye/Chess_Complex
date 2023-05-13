@@ -16,6 +16,7 @@ public class Tile : MonoBehaviour
     public Vector2 MyPosition;
     public bool EffectUsed = false;
     public bool PlaceTaken = false;
+    public int score = 0;
 
     private MeshRenderer myMeshRenderer;
     private Color originalColor;
@@ -42,7 +43,7 @@ public class Tile : MonoBehaviour
     private void OnMouseExit()
     {
         // Code exécuté lorsque la souris quitte le collider de l'objet
-        Debug.Log("Souris sortie de l'objet : " + gameObject.name);
+        //Debug.Log("Souris sortie de l'objet : " + gameObject.name);
         ChangerMyMaterial(originalColor);
     }
 }
