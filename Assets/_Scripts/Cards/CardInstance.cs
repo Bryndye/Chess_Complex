@@ -32,7 +32,7 @@ public class CardInstance : MonoBehaviour
         {
             return;
         }
-        MyPlayerManager.UsingCard(MyCard);
+        MyPlayerManager.UsingCard(this);
     }
 
     public void DisableCard()

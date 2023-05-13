@@ -57,15 +57,15 @@ public class PlayerInterface : MonoBehaviour
         }
     }
 
-    public void DeleteCardContainer(Card _card)
+    public void DeleteCardContainer(CardInstance _cardInstance)
     {
         int childCount = cardsContainer.childCount;
 
         for (int i = childCount - 1; i >= 0; i--)
         {
             var cardInstance = cardsContainer.GetChild(i).GetComponent<CardInstance>();
-            var card = cardInstance.MyCard;
-            if (_card == card)
+
+            if (_cardInstance == cardInstance)
             {
                 Destroy(cardInstance.gameObject);
             }

@@ -42,8 +42,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void UsingCard(Card _card)
+    public void UsingCard(CardInstance _cardInstance)
     {
+        Card _card = _cardInstance.MyCard;
         switch (_card.MyCardType)
         {
             case CardType.Movement:
@@ -56,7 +57,7 @@ public class PlayerManager : MonoBehaviour
             default:
                 break;
         }
-        playerInterface.DeleteCardContainer(_card);
+        playerInterface.DeleteCardContainer(_cardInstance);
         RemoveCard(_card);
     }
 }
