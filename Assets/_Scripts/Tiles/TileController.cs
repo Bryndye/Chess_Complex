@@ -117,7 +117,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance horizontale est dans la portée maximale
             if (distanceX <= maxRange)
             {
-                SetTileIntoPortee(x, startY);
+                Vector2 tilePosition = new Vector2(x, startY);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -130,7 +142,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance horizontale est dans la portée maximale
             if (distanceX <= maxRange)
             {
-                SetTileIntoPortee(x, startY);
+                Vector2 tilePosition = new Vector2(x, startY);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -143,7 +167,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance verticale est dans la portée maximale
             if (distanceY <= maxRange)
             {
-                SetTileIntoPortee(startX, y);
+                Vector2 tilePosition = new Vector2(startX, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -156,7 +192,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance verticale est dans la portée maximale
             if (distanceY <= maxRange)
             {
-                SetTileIntoPortee(startX, y);
+                Vector2 tilePosition = new Vector2(startX, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -181,7 +229,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x <= startX + maxRange && y <= startY + maxRange)
             {
-                SetTileIntoPortee(x, y);
+                Vector2 tilePosition = new Vector2(x, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -194,7 +254,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x >= startX - maxRange && y <= startY + maxRange)
             {
-                SetTileIntoPortee(x, y);
+                Vector2 tilePosition = new Vector2(x, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -207,7 +279,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x <= startX + maxRange && y >= startY - maxRange)
             {
-                SetTileIntoPortee(x, y);
+                Vector2 tilePosition = new Vector2(x, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -220,7 +304,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x >= startX - maxRange && y >= startY - maxRange)
             {
-                SetTileIntoPortee(x, y);
+                Vector2 tilePosition = new Vector2(x, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 //Debug.Log("Case dans la portée : " + tile);
             }
         }
@@ -251,7 +347,19 @@ public class TileController : MonoBehaviour
                     // Vérifier si la case est dans la portée normale ou diagonale
                     if (distanceX + distanceY <= normalRange || (distanceX <= diagonalRange && distanceY <= diagonalRange))
                     {
-                        SetTileIntoPortee(x, y);
+                        Vector2 tilePosition = new Vector2(x, y);
+                        Tile tile = GetTileAtPosition(tilePosition);
+                        if (tile != null)
+                        {
+                            if (!tile.PlaceTaken)
+                            {
+                                SetTileIntoPortee(tile);
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
                         // La case est dans la portée, vous pouvez faire quelque chose avec cette case
                         //Debug.Log("Case dans la portée : " + tile);
                     }
@@ -284,7 +392,19 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (Mathf.Abs(x - startX) + Mathf.Abs(y - startY) <= maxRange)
             {
-                SetTileIntoPortee(x, y);
+                Vector2 tilePosition = new Vector2(x, y);
+                Tile tile = GetTileAtPosition(tilePosition);
+                if (tile != null)
+                {
+                    if (!tile.PlaceTaken)
+                    {
+                        SetTileIntoPortee(tile);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
         }
     }
@@ -313,7 +433,19 @@ public class TileController : MonoBehaviour
                 if (distance <= maxRange)
                 {
                     // La case est dans la portée, vous pouvez faire quelque chose avec cette case
-                    SetTileIntoPortee(x,y);
+                    Vector2 tilePosition = new Vector2(x, y);
+                    Tile tile = GetTileAtPosition(tilePosition);
+                    if (tile != null)
+                    {
+                        if (!tile.PlaceTaken)
+                        {
+                            SetTileIntoPortee(tile);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
                     //Debug.Log("Case dans la portée : " + tile);
                 }
             }
@@ -334,18 +466,10 @@ public class TileController : MonoBehaviour
         return null;
     }
 
-    private void SetTileIntoPortee(int x, int y)
+    private void SetTileIntoPortee(Tile tile)
     {
-        Vector2 tilePosition = new Vector2(x, y);
-        Tile tile = GetTileAtPosition(tilePosition);
-        if (tile != null)
-        {
-            if (!tile.PlaceTaken)
-            {            
-                tile.SetValueToShader("_InPortee", 1);
-                TilesListMvtPossible.Add(tile);
-            }
-        }
+        tile.SetValueToShader("_InPortee", 1);
+        TilesListMvtPossible.Add(tile);
     }
 
     private void ResetTile()
