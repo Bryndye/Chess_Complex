@@ -8,8 +8,15 @@ public class CardInstance : MonoBehaviour
     public Card MyCard;
     public PlayerManager MyPlayerManager;
 
-    [SerializeField] private Image myImage;
+    private Image myImage;
+    private Button myBtn;
     private bool isDisable = false;
+
+    private void Awake()
+    {
+        myBtn = GetComponent<Button>();
+        myImage = GetComponent<Image>();
+    }
 
     public void Initialize(PlayerManager playerManager,Card _card)
     {
@@ -31,6 +38,7 @@ public class CardInstance : MonoBehaviour
     public void DisableCard()
     {
         isDisable = true;
+        myBtn.interactable = false;
         myImage.color = Color.grey;
     }
 

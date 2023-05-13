@@ -60,14 +60,14 @@ public class TileController : MonoBehaviour
                         playerManager.MyPlayer.SetItemOnTile(_tile);
                         playerManager.HasPlayedMovement = true;
                         canMovement = false;
+                        ResetTile();
+                        TilesListMvtPossible.Clear();
                     }
                     else
                     {
                         Debug.Log("Wrong tile");
                     }
                 }
-
-                // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :
                 //Debug.Log("Objet cliqué : " + clickedObject.name);
             }
         }
@@ -76,8 +76,6 @@ public class TileController : MonoBehaviour
     #region CalculatePortee
     public void CalculatePortee(PlayerController playerController, Card _card)
     {
-        TilesListMvtPossible.Clear();
-
         if (_card.CircleMovement)
         {
 
@@ -278,8 +276,16 @@ public class TileController : MonoBehaviour
         Tile tile = GetTileAtPosition(tilePosition);
         if (tile != null)
         {
-            tile.ChangerMyMaterial(Color.blue);
+            tile.SetValueToShader("_InPortee", 1);
             TilesListMvtPossible.Add(tile);
+        }
+    }
+
+    private void ResetTile()
+    {
+        foreach (var tile in TilesListMvtPossible)
+        {
+            tile.SetValueToShader("_InPortee", 0);
         }
     }
 

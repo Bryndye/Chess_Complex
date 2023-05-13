@@ -19,12 +19,10 @@ public class Tile : MonoBehaviour
     public int score = 0;
 
     private MeshRenderer myMeshRenderer;
-    private Color originalColor;
 
     private void Awake()
     {
         myMeshRenderer = GetComponent<MeshRenderer>();
-        originalColor = myMeshRenderer.material.color;
     }
 
     public void EnterTile(PlayerManager playerManager = null)
@@ -62,24 +60,22 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void ChangerMyMaterial(Color color)
+    public void SetValueToShader(string _name, int _value)
     {
         //Debug.Log("changed material ");
-        myMeshRenderer.material.color = color;
+        myMeshRenderer.material.SetInt(_name, _value);
     }
 
     private void OnMouseEnter()
     {
-        // Code exécuté lorsque la souris entre dans le collider de l'objet
         //Debug.Log("Souris entrée sur l'objet : " + gameObject.name);
-        ChangerMyMaterial(Color.red);
+        SetValueToShader("_IsHover", 1);
     }
 
     private void OnMouseExit()
     {
-        // Code exécuté lorsque la souris quitte le collider de l'objet
         //Debug.Log("Souris sortie de l'objet : " + gameObject.name);
-        ChangerMyMaterial(originalColor);
+        SetValueToShader("_IsHover", 0);
     }
 }
 

@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 97e068005b9ebc8499b5cf9aa0fa7d1c, type: 2}
+  - {fileID: 2100000, guid: a267004a21377a74a945292e869c049c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,3 +114,4 @@ MonoBehaviour:
   MyPosition: {x: 0, y: 0}
   EffectUsed: 0
   PlaceTaken: 0
+  score: 0
