@@ -353,6 +353,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1136530232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1791052637586812110, guid: 4dde73b1795709f42a105296926ec898,
+    type: 3}
+  m_PrefabInstance: {fileID: 1220770566}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1136530234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136530232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb45e1e50aff734c95cdc3f5961eefa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles: []
 --- !u!1001 &1220770566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -576,6 +595,11 @@ PrefabInstance:
       propertyPath: TileStart
       value: 
       objectReference: {fileID: 518581351}
+    - target: {fileID: 538174502836749977, guid: e6897b487fca61d43b15f1b5e638de6a,
+        type: 3}
+      propertyPath: myPlayerManager
+      value: 
+      objectReference: {fileID: 259703937}
     - target: {fileID: 538174502836749979, guid: e6897b487fca61d43b15f1b5e638de6a,
         type: 3}
       propertyPath: m_Name
@@ -806,6 +830,11 @@ PrefabInstance:
       propertyPath: TileStart
       value: 
       objectReference: {fileID: 1220770567}
+    - target: {fileID: 538174502836749977, guid: e6897b487fca61d43b15f1b5e638de6a,
+        type: 3}
+      propertyPath: myPlayerManager
+      value: 
+      objectReference: {fileID: 259703936}
     - target: {fileID: 538174502836749979, guid: e6897b487fca61d43b15f1b5e638de6a,
         type: 3}
       propertyPath: m_Name
@@ -830,45 +859,22 @@ PrefabInstance:
       objectReference: {fileID: 568030588}
     - target: {fileID: 259703937, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
       propertyPath: MyCards.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 259703938, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
-      propertyPath: cardPrefab
+    - target: {fileID: 259703937, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
+      propertyPath: MyCards.Array.data[3]
       value: 
-      objectReference: {fileID: 7863053889947100505, guid: f7e1c37f0f3575d4dba1fc834fc26e16,
-        type: 3}
+      objectReference: {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20,
+        type: 2}
     - target: {fileID: 259703938, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
       propertyPath: cardsContainer
       value: 
       objectReference: {fileID: 1598678141}
-    - target: {fileID: 259703938, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
-      propertyPath: playerManager1
-      value: 
-      objectReference: {fileID: 259703937}
-    - target: {fileID: 259703938, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
-      propertyPath: playerManager2
-      value: 
-      objectReference: {fileID: 259703936}
     - target: {fileID: 4856292359966049728, guid: a4bc535c7c8511e4a895405334ba3c60,
         type: 3}
       propertyPath: m_Name
-      value: PlayersController
+      value: Managers
       objectReference: {fileID: 0}
-    - target: {fileID: 4856292359966049732, guid: a4bc535c7c8511e4a895405334ba3c60,
-        type: 3}
-      propertyPath: playerTEST
-      value: 
-      objectReference: {fileID: 568030588}
-    - target: {fileID: 4856292359966049732, guid: a4bc535c7c8511e4a895405334ba3c60,
-        type: 3}
-      propertyPath: playerManager1
-      value: 
-      objectReference: {fileID: 259703937}
-    - target: {fileID: 4856292359966049732, guid: a4bc535c7c8511e4a895405334ba3c60,
-        type: 3}
-      propertyPath: playerManager2
-      value: 
-      objectReference: {fileID: 259703936}
     - target: {fileID: 4856292359966049733, guid: a4bc535c7c8511e4a895405334ba3c60,
         type: 3}
       propertyPath: turnCountText
@@ -943,16 +949,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 64149356260618889, guid: bb8d52d7964541248afca4e01d9f54d4,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.0014648438
-      objectReference: {fileID: 0}
-    - target: {fileID: 64149356260618889, guid: bb8d52d7964541248afca4e01d9f54d4,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.000015258789
-      objectReference: {fileID: 0}
     - target: {fileID: 5062066363220026936, guid: bb8d52d7964541248afca4e01d9f54d4,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

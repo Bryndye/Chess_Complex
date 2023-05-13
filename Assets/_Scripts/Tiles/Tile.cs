@@ -27,6 +27,41 @@ public class Tile : MonoBehaviour
         originalColor = myMeshRenderer.material.color;
     }
 
+    public void EnterTile(PlayerManager playerManager = null)
+    {
+        PlaceTaken = true;
+        if (playerManager != null)
+        {
+            UseEffect(playerManager);
+        }
+    }
+
+    public void ExitTile()
+    {
+        PlaceTaken = false;
+    }
+
+    private void UseEffect(PlayerManager playerManager)
+    {
+        if (EffectUsed)
+        {
+            return;
+        }
+        EffectUsed = true;
+        switch (MyType)
+        {
+            case TileType.NoEvent:
+                break;
+            case TileType.RandomEvent:
+                playerManager.AddCard(EventsManager.Instance.RandomCard());
+                break;
+            case TileType.Shop:
+                break;
+            default:
+                break;
+        }
+    }
+
     public void ChangerMyMaterial(Color color)
     {
         //Debug.Log("changed material ");

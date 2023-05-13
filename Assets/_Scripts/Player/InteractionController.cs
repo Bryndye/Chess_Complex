@@ -43,12 +43,12 @@ public class InteractionController : MonoBehaviour
                     // FCT TEST PLAYER
                     if (turnController.Player1Turn())
                     {
-                        playerManager1.MyPlayer.SetItemOnTile(_tile);
+                        //playerManager1.MyPlayer.SetItemOnTile(_tile);
                     }
                     else
                     {
-                        playerManager2.MyPlayer.SetItemOnTile(_tile);
-                    } 
+                        //playerManager2.MyPlayer.SetItemOnTile(_tile);
+                    }
                 }
 
                 // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :

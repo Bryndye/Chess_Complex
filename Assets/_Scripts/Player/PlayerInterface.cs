@@ -28,20 +28,21 @@ public class PlayerInterface : MonoBehaviour
         if (turnController.Player1Turn())
         {
             ClearCardsContainer();
-            SetCardsContainer(playerManager1.MyCards);
+            SetCardsContainer(playerManager1);
         }
         else
         {
             ClearCardsContainer();
-            SetCardsContainer(playerManager2.MyCards);
+            SetCardsContainer(playerManager2);
         }
     }
 
-    public void SetCardsContainer(Card[] _cards)
+    public void SetCardsContainer(PlayerManager playerManager)
     {
+        List<Card> _cards = playerManager.MyCards;
         foreach (Card card in _cards) {
             var cardInstance = Instantiate(cardPrefab, cardsContainer);
-            cardInstance.Initialize(card);
+            cardInstance.Initialize(playerManager, card);
         }
     }
 

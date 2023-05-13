@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 259703937}
   - component: {fileID: 259703936}
   - component: {fileID: 259703938}
+  - component: {fileID: 259703939}
   m_Layer: 0
   m_Name: PlayersController
   m_TagString: Untagged
@@ -64,7 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738204ffb80d154448b06f884bc1e09c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTEST: {fileID: 0}
+  playerManager1: {fileID: 259703937}
+  playerManager2: {fileID: 259703936}
 --- !u!114 &259703937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,10 +80,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: 0
+  MyPlayer: {fileID: 0}
   MyCards:
   - {fileID: 11400000, guid: 158ad2f0ee9e4d94aa62e208017b39bb, type: 2}
   - {fileID: 11400000, guid: f65b534140e5fb3458f83233aeabd454, type: 2}
-  - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
   - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
 --- !u!114 &259703936
 MonoBehaviour:
@@ -96,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: 1
+  MyPlayer: {fileID: 0}
   MyCards:
   - {fileID: 11400000, guid: 158ad2f0ee9e4d94aa62e208017b39bb, type: 2}
   - {fileID: 11400000, guid: f65b534140e5fb3458f83233aeabd454, type: 2}
@@ -113,6 +116,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c2ec9051e4a984292894c7902fd7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 6650852748339634529, guid: f7e1c37f0f3575d4dba1fc834fc26e16,
+  cardPrefab: {fileID: 7863053889947100505, guid: f7e1c37f0f3575d4dba1fc834fc26e16,
     type: 3}
   cardsContainer: {fileID: 0}
+  playerManager1: {fileID: 259703937}
+  playerManager2: {fileID: 259703936}
+--- !u!114 &259703939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4856292359966049728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bed7b423bb02a4780116cfb3374512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StockCards:
+  - {fileID: 11400000, guid: e395aa8b97b08e24ea6db67bc2b7effa, type: 2}
+  - {fileID: 11400000, guid: 158ad2f0ee9e4d94aa62e208017b39bb, type: 2}
+  - {fileID: 11400000, guid: f65b534140e5fb3458f83233aeabd454, type: 2}
+  - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
+  - {fileID: 11400000, guid: 68b44a5785c1c5d479242c25d3c721a6, type: 2}
+  - {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20, type: 2}
