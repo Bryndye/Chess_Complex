@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
     public void NextTurnSet()
     {
         HasPlayedMovement = false;
+        // RESET STAT BONUS/ MALUS PLAYER
+        MyPlayer.PorteeBoost = 0;
     }
 
     public void AddCard(Card _card)

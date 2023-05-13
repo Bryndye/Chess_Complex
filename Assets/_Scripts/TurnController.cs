@@ -51,8 +51,6 @@ public class TurnController : MonoBehaviour
 
     public void NextTurn()
     {
-        // BTN DOIT ETRE DISABLE SI MVT EN COURS
-        // DOIT REST BOOST STAT/ MALUS
         tileController.ResetMovementParameter();
 
         CurrentTurn = CurrentTurn == Turn.Player1 ? Turn.Player2 : Turn.Player1;
