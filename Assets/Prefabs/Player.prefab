@@ -128,7 +128,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce8241ee16dff744fb2e94b3daa44639, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76d2ca41a83b51644bedc5a17542598c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12bd27b4624a2754b85f8010c89e5530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
 --- !u!1 &538174502836749979
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,3 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92645aa0a9711e4787d537dd91f3c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPlayerManager: {fileID: 0}
+  TileStart: {fileID: 0}
+  currentTile: {fileID: 0}

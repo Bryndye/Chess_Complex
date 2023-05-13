@@ -12,6 +12,8 @@ public class TurnController : MonoBehaviour
 {
     public static TurnController instance;
     private PlayerInterface playerInterface;
+    [SerializeField] PlayerManager playerManager1;
+    [SerializeField] PlayerManager playerManager2;
 
     public Turn CurrentTurn = Turn.Player2;
     public int TurnCount = 0;
@@ -42,7 +44,12 @@ public class TurnController : MonoBehaviour
 
         if (CurrentTurn == Turn.Player1)
         {
+            playerManager1.NextTurnSet();
             TurnCount++;
+        }
+        else
+        {
+            playerManager2.NextTurnSet();
         }
 
         currentTurnText.text = CurrentTurn.ToString();

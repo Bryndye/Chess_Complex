@@ -17,10 +17,10 @@ public class InteractionController : MonoBehaviour
 
     void Update()
     {
-        mouseIntoWorld();
+        //mouseIntoWorld();
     }
 
-    private void mouseIntoWorld()
+    public void mouseIntoWorld(PlayerManager playerManager)
     {
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -40,15 +40,15 @@ public class InteractionController : MonoBehaviour
                 if (clickedObject.TryGetComponent(out Tile _tile))
                 {
                     //_tile.ChangerMyMaterial();
-                    // FCT TEST PLAYER
-                    if (turnController.Player1Turn())
-                    {
-                        //playerManager1.MyPlayer.SetItemOnTile(_tile);
-                    }
-                    else
-                    {
-                        //playerManager2.MyPlayer.SetItemOnTile(_tile);
-                    }
+                    //if (turnController.Player1Turn())
+                    //{
+                    //    //playerManager1.MyPlayer.SetItemOnTile(_tile);
+                    //}
+                    //else
+                    //{
+                    //    //playerManager2.MyPlayer.SetItemOnTile(_tile);
+                    //}
+                    playerManager.MyPlayer.SetItemOnTile(_tile);
                 }
 
                 // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :

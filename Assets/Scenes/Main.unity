@@ -857,15 +857,6 @@ PrefabInstance:
       propertyPath: MyPlayer
       value: 
       objectReference: {fileID: 568030588}
-    - target: {fileID: 259703937, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
-      propertyPath: MyCards.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 259703937, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
-      propertyPath: MyCards.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20,
-        type: 2}
     - target: {fileID: 259703938, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
       propertyPath: cardsContainer
       value: 

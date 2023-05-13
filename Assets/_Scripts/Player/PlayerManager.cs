@@ -15,9 +15,16 @@ public class PlayerManager : MonoBehaviour
     public PlayerController MyPlayer;
     public List<Card> MyCards;
 
+    public bool HasPlayedMovement = false;
+
     private void Start()
     {
         tileController = TileController.instance;
+    }
+
+    public void NextTurnSet()
+    {
+        HasPlayedMovement = false;
     }
 
     public void AddCard(Card _card)
@@ -42,5 +49,6 @@ public class PlayerManager : MonoBehaviour
             default:
                 break;
         }
+        HasPlayedMovement = true;
     }
 }

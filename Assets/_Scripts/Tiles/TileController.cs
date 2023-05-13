@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileController : MonoBehaviour
 {
     public static TileController instance;
+    private TurnController turnController;
     public Tile[] tiles;
+
+    [Header("Movement tile")]
+    [SerializeField] private bool canMovement = false;
+    public List<Tile> TilesListMvtPossible;
+    private PlayerManager currentPlayer;
+    [SerializeField] PlayerManager playerManager1;
+    [SerializeField] PlayerManager playerManager2;
 
     private void Awake()
     {
@@ -14,11 +23,69 @@ public class TileController : MonoBehaviour
 
     private void Start()
     {
+        turnController = TurnController.instance;
         tiles = FindObjectsOfType<Tile>();
     }
 
+
+    void Update()
+    {
+        if (canMovement)
+        {
+            mouseIntoWorld(currentPlayer);
+        }
+    }
+
+    public void mouseIntoWorld(PlayerManager playerManager)
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            // La souris est sur un objet UI, ignorer le raycast pour les objets 3D
+            Debug.Log("UI entre souris et 3D");
+            return;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                GameObject clickedObject = hit.collider.gameObject;
+                if (clickedObject.TryGetComponent(out Tile _tile))
+                {
+                    //_tile.ChangerMyMaterial();
+                    //if (turnController.Player1Turn())
+                    //{
+                    //    //playerManager1.MyPlayer.SetItemOnTile(_tile);
+                    //}
+                    //else
+                    //{
+                    //    //playerManager2.MyPlayer.SetItemOnTile(_tile);
+                    //}
+                    if (CheckTileIntoPortee(_tile))
+                    {
+                        playerManager.MyPlayer.SetItemOnTile(_tile);
+                        canMovement = false;
+                    }
+                    else
+                    {
+                        Debug.Log("Wrong tile");
+                    }
+                }
+
+                // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :
+                //Debug.Log("Objet cliqué : " + clickedObject.name);
+            }
+        }
+    }
+
+    #region CalculatePortee
     public void CalculatePortee(PlayerController playerController, Card _card)
     {
+        TilesListMvtPossible.Clear();
+
         if (_card.CircleMovement)
         {
 
@@ -35,6 +102,9 @@ public class TileController : MonoBehaviour
         {
 
         }
+        // can movement player
+        currentPlayer = turnController.Player1Turn() ? playerManager1 : playerManager2;
+        canMovement = true;
     }
 
     private void PorteeLigne(PlayerController playerController, Card _card)
@@ -46,7 +116,7 @@ public class TileController : MonoBehaviour
         int startX = Mathf.RoundToInt(posInitPlayer.x);
         int startY = Mathf.RoundToInt(posInitPlayer.y);
 
-        List<Tile> list = new List<Tile>();
+        
 
         // Parcourir les cases dans la portée maximale
         for (int x = startX + 1; x <= startX + maxRange; x++)
@@ -57,14 +127,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance horizontale est dans la portée maximale
             if (distanceX <= maxRange)
             {
-                Vector2 tilePosition = new Vector2(x, startY);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(x, startY);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
 
@@ -76,14 +140,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance horizontale est dans la portée maximale
             if (distanceX <= maxRange)
             {
-                Vector2 tilePosition = new Vector2(x, startY);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(x, startY);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
 
@@ -95,14 +153,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance verticale est dans la portée maximale
             if (distanceY <= maxRange)
             {
-                Vector2 tilePosition = new Vector2(startX, y);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(startX, y);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
 
@@ -114,14 +166,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la distance verticale est dans la portée maximale
             if (distanceY <= maxRange)
             {
-                Vector2 tilePosition = new Vector2(startX, y);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(startX, y);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
     }
@@ -135,7 +181,6 @@ public class TileController : MonoBehaviour
         int startX = Mathf.RoundToInt(posInitPlayer.x);
         int startY = Mathf.RoundToInt(posInitPlayer.y);
 
-        List<Tile> list = new List<Tile>();
 
         // Parcourir les cases dans la portée maximale
         for (int i = 1; i <= maxRange; i++)
@@ -146,14 +191,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x <= startX + maxRange && y <= startY + maxRange)
             {
-                Vector2 tilePosition = new Vector2(x, y);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(x, y);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
 
@@ -165,14 +204,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x >= startX - maxRange && y <= startY + maxRange)
             {
-                Vector2 tilePosition = new Vector2(x, y);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(x, y);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
 
@@ -184,14 +217,8 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x <= startX + maxRange && y >= startY - maxRange)
             {
-                Vector2 tilePosition = new Vector2(x, y);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(x, y);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
 
@@ -203,19 +230,11 @@ public class TileController : MonoBehaviour
             // Vérifier si la case est dans la portée maximale
             if (x >= startX - maxRange && y >= startY - maxRange)
             {
-                Vector2 tilePosition = new Vector2(x, y);
-                Tile tile = GetTileAtPosition(tilePosition);
-                if (tile != null)
-                {
-                    tile.ChangerMyMaterial(Color.blue);
-                    list.Add(tile);
-                }
-                Debug.Log("Case dans la portée : " + tile);
+                SetTileIntoPortee(x, y);
+                //Debug.Log("Case dans la portée : " + tile);
             }
         }
     }
-
-
 
     private void PorteeStandard(PlayerController playerController, Card _card)
     {
@@ -226,7 +245,7 @@ public class TileController : MonoBehaviour
         int startX = Mathf.RoundToInt(posInitPlayer.x);
         int startY = Mathf.RoundToInt(posInitPlayer.y);
 
-        List<Tile> list = new List<Tile>();
+        
 
         // Parcourir les cases dans la portée maximale
         for (int x = startX - maxRange; x <= startX + maxRange; x++)
@@ -240,18 +259,13 @@ public class TileController : MonoBehaviour
                 if (distance <= maxRange)
                 {
                     // La case est dans la portée, vous pouvez faire quelque chose avec cette case
-                    Vector2 tilePosition = new Vector2(x, y);
-                    Tile tile = GetTileAtPosition(tilePosition);
-                    if (tile != null)
-                    {
-                        tile.ChangerMyMaterial(Color.blue);
-                        list.Add(tile);
-                    }
-                    Debug.Log("Case dans la portée : " + tile);
+                    SetTileIntoPortee(x,y);
+                    //Debug.Log("Case dans la portée : " + tile);
                 }
             }
         }
     }
+    #endregion
 
     private Tile GetTileAtPosition(Vector2 position)
     {
@@ -264,5 +278,28 @@ public class TileController : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void SetTileIntoPortee(int x, int y)
+    {
+        Vector2 tilePosition = new Vector2(x, y);
+        Tile tile = GetTileAtPosition(tilePosition);
+        if (tile != null)
+        {
+            tile.ChangerMyMaterial(Color.blue);
+            TilesListMvtPossible.Add(tile);
+        }
+    }
+
+    private bool CheckTileIntoPortee(Tile _tile)
+    {
+        foreach(Tile tile in TilesListMvtPossible)
+        {
+            if (_tile.MyPosition == tile.MyPosition)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
