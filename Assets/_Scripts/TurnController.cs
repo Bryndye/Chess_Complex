@@ -40,6 +40,10 @@ public class TurnController : MonoBehaviour
 
     public void NextTurn()
     {
+        // DOIT RESET LES MOVEMENTS EN COURS!
+        // BTN DOIT ETRE DISABLE SI MVT EN COURS
+        // DOIT REST BOOST STAT/ MALUS
+
         CurrentTurn = CurrentTurn == Turn.Player1 ? Turn.Player2 : Turn.Player1;
         PlayerManager currentPM = CurrentTurn == Turn.Player1 ? playerManager1 : playerManager2;
 
