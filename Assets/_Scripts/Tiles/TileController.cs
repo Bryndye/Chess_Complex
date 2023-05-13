@@ -30,7 +30,7 @@ public class TileController : MonoBehaviour
 
     void Update()
     {
-        if (canMovement)
+        if (canMovement && !currentPlayer.HasPlayedMovement)
         {
             mouseIntoWorld(currentPlayer);
         }
@@ -55,18 +55,10 @@ public class TileController : MonoBehaviour
                 GameObject clickedObject = hit.collider.gameObject;
                 if (clickedObject.TryGetComponent(out Tile _tile))
                 {
-                    //_tile.ChangerMyMaterial();
-                    //if (turnController.Player1Turn())
-                    //{
-                    //    //playerManager1.MyPlayer.SetItemOnTile(_tile);
-                    //}
-                    //else
-                    //{
-                    //    //playerManager2.MyPlayer.SetItemOnTile(_tile);
-                    //}
                     if (CheckTileIntoPortee(_tile))
                     {
                         playerManager.MyPlayer.SetItemOnTile(_tile);
+                        playerManager.HasPlayedMovement = true;
                         canMovement = false;
                     }
                     else
@@ -110,7 +102,7 @@ public class TileController : MonoBehaviour
     private void PorteeLigne(PlayerController playerController, Card _card)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
-        int maxRange = _card.Portee;
+        int maxRange = _card.Portee + playerController.PorteeBoost;
 
         // Convertir la position en coordonnées entières
         int startX = Mathf.RoundToInt(posInitPlayer.x);
@@ -175,7 +167,7 @@ public class TileController : MonoBehaviour
     private void PorteeDiagonale(PlayerController playerController, Card _card)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
-        int maxRange = _card.Portee;
+        int maxRange = _card.Portee + playerController.PorteeBoost;
 
         // Convertir la position en coordonnées entières
         int startX = Mathf.RoundToInt(posInitPlayer.x);
@@ -239,7 +231,7 @@ public class TileController : MonoBehaviour
     private void PorteeStandard(PlayerController playerController, Card _card)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
-        int maxRange = _card.Portee;
+        int maxRange = _card.Portee + playerController.PorteeBoost;
 
         // Convertir la position en coordonnées entières
         int startX = Mathf.RoundToInt(posInitPlayer.x);

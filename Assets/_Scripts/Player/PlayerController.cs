@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerManager myPlayerManager;
+    Animator myAnimator;
+
+    [Header("Tile paramaters")]
     public Tile TileStart;
     public Tile currentTile;
-    Animator myAnimator;
+    public int PorteeBoost = 0;
 
     private void Awake()
     {

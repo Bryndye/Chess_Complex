@@ -9,6 +9,7 @@ public class CardInstance : MonoBehaviour
     public PlayerManager MyPlayerManager;
 
     [SerializeField] private Image myImage;
+    private bool isDisable = false;
 
     public void Initialize(PlayerManager playerManager,Card _card)
     {
@@ -20,12 +21,26 @@ public class CardInstance : MonoBehaviour
     public void UseCard()
     {
         Debug.Log("clicked");
+        if (isDisable)
+        {
+            return;
+        }
         MyPlayerManager.UsingCard(MyCard);
+    }
+
+    public void DisableCard()
+    {
+        isDisable = true;
+        myImage.color = Color.grey;
     }
 
     public void PointerEnter()
     {
         Debug.Log("hover enter");
+        if (isDisable)
+        {
+            return;
+        }
     }
 
 

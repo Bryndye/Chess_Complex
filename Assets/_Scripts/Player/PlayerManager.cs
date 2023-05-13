@@ -9,6 +9,7 @@ public enum Player
 public class PlayerManager : MonoBehaviour
 {
     private TileController tileController;
+    private PlayerInterface playerInterface;
 
     public Player Player;
 
@@ -20,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         tileController = TileController.instance;
+        playerInterface = PlayerInterface.instance;
     }
 
     public void NextTurnSet()
@@ -33,8 +35,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     public void RemoveCard(Card _card) 
-    { 
-        MyCards.Remove(_card);
+    {
+        if (MyCards.Contains(_card))
+        {
+            MyCards.Remove(_card);
+        }
     }
 
     public void UsingCard(Card _card)
@@ -43,12 +48,15 @@ public class PlayerManager : MonoBehaviour
         {
             case CardType.Movement:
                 tileController.CalculatePortee(MyPlayer, _card);
+                playerInterface.SetCardDisable();
                 break;
             case CardType.Boost:
+                MyPlayer.PorteeBoost += _card.BoostMovement;
                 break;
             default:
                 break;
         }
-        HasPlayedMovement = true;
+        playerInterface.DeleteCardContainer(_card);
+        RemoveCard(_card);
     }
 }

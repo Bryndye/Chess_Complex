@@ -56,4 +56,33 @@ public class PlayerInterface : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
+    public void DeleteCardContainer(Card _card)
+    {
+        int childCount = cardsContainer.childCount;
+
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            var cardInstance = cardsContainer.GetChild(i).GetComponent<CardInstance>();
+            var card = cardInstance.MyCard;
+            if (_card == card)
+            {
+                Destroy(cardInstance.gameObject);
+            }
+        }
+    }
+
+    public void SetCardDisable()
+    {
+        int childCount = cardsContainer.childCount;
+
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            var child = cardsContainer.GetChild(i).GetComponent<CardInstance>();
+            if (child.MyCard.MyCardType == CardType.Movement)
+            {
+                child.DisableCard();
+            }
+        }
+    }
 }
