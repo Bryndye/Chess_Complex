@@ -78,7 +78,7 @@ public class TileController : MonoBehaviour
     {
         if (_card.CircleMovement)
         {
-
+            PorteeSquare(playerController, _card);
         }
         if (_card.LigneMovement)
         {
@@ -90,7 +90,7 @@ public class TileController : MonoBehaviour
         }
         if (_card.KnightMovement)
         {
-
+            PorteeKnigth(playerController, _card);
         }
         // can movement player
         currentPlayer = turnController.Player1Turn() ? playerManager1 : playerManager2;
@@ -226,6 +226,70 @@ public class TileController : MonoBehaviour
         }
     }
 
+    private void PorteeSquare(PlayerController playerController, Card _card)
+    {
+        Vector2 posInitPlayer = playerController.currentTile.MyPosition;
+        int normalRange = _card.Portee + playerController.PorteeBoost;
+        int diagonalRange = normalRange + 1; // Portée diagonale d'une case supplémentaire
+
+        // Convertir la position en coordonnées entières
+        int startX = Mathf.RoundToInt(posInitPlayer.x);
+        int startY = Mathf.RoundToInt(posInitPlayer.y);
+
+        // Parcourir les cases dans la portée maximale
+        for (int x = startX - normalRange; x <= startX + normalRange; x++)
+        {
+            for (int y = startY - normalRange; y <= startY + normalRange; y++)
+            {
+                // Vérifier si la case est différente de la position initiale du joueur
+                if (x != startX || y != startY)
+                {
+                    // Calculer la distance entre la position de départ et la case actuelle
+                    int distanceX = Mathf.Abs(x - startX);
+                    int distanceY = Mathf.Abs(y - startY);
+
+                    // Vérifier si la case est dans la portée normale ou diagonale
+                    if (distanceX + distanceY <= normalRange || (distanceX <= diagonalRange && distanceY <= diagonalRange))
+                    {
+                        SetTileIntoPortee(x, y);
+                        // La case est dans la portée, vous pouvez faire quelque chose avec cette case
+                        //Debug.Log("Case dans la portée : " + tile);
+                    }
+                }
+            }
+        }
+    }
+
+    private void PorteeKnigth(PlayerController playerController, Card _card)
+    {
+        Vector2 posInitPlayer = playerController.currentTile.MyPosition;
+        int maxRange = _card.Portee + playerController.PorteeBoost;
+
+        // Convertir la position en coordonnées entières
+        int startX = Mathf.RoundToInt(posInitPlayer.x);
+        int startY = Mathf.RoundToInt(posInitPlayer.y);
+
+        List<Tile> list = new List<Tile>();
+
+        // Déplacements possibles du cavalier sous forme de décalages de coordonnées
+        int[] offsetX = { -2, -1, 1, 2, -2, -1, 1, 2 };
+        int[] offsetY = { 1, 2, 2, 1, -1, -2, -2, -1 };
+
+        // Parcourir les déplacements possibles
+        for (int i = 0; i < offsetX.Length; i++)
+        {
+            int x = startX + offsetX[i];
+            int y = startY + offsetY[i];
+
+            // Vérifier si la case est dans la portée maximale
+            if (Mathf.Abs(x - startX) + Mathf.Abs(y - startY) <= maxRange)
+            {
+                SetTileIntoPortee(x, y);
+            }
+        }
+    }
+
+
     private void PorteeStandard(PlayerController playerController, Card _card)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
@@ -276,8 +340,11 @@ public class TileController : MonoBehaviour
         Tile tile = GetTileAtPosition(tilePosition);
         if (tile != null)
         {
-            tile.SetValueToShader("_InPortee", 1);
-            TilesListMvtPossible.Add(tile);
+            if (!tile.PlaceTaken)
+            {            
+                tile.SetValueToShader("_InPortee", 1);
+                TilesListMvtPossible.Add(tile);
+            }
         }
     }
 
