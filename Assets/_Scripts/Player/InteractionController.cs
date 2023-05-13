@@ -5,7 +5,15 @@ using UnityEngine.EventSystems;
 
 public class InteractionController : MonoBehaviour
 {
-    public PlayerController playerTEST; // VAR TEST A SUPPRIMER
+    private TurnController turnController;
+
+    [SerializeField] PlayerManager playerManager1;
+    [SerializeField] PlayerManager playerManager2;
+
+    private void Start()
+    {
+        turnController = TurnController.instance;
+    }
 
     void Update()
     {
@@ -33,7 +41,14 @@ public class InteractionController : MonoBehaviour
                 {
                     //_tile.ChangerMyMaterial();
                     // FCT TEST PLAYER
-                    playerTEST.SetItemOnTile(_tile);
+                    if (turnController.Player1Turn())
+                    {
+                        playerManager1.MyPlayer.SetItemOnTile(_tile);
+                    }
+                    else
+                    {
+                        playerManager2.MyPlayer.SetItemOnTile(_tile);
+                    } 
                 }
 
                 // Utilisez 'clickedObject' comme vous le souhaitez, par exemple :

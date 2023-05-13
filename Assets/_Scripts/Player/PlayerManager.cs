@@ -10,5 +10,6 @@ public class PlayerManager : MonoBehaviour
 {
     public Player Player;
 
+    public PlayerController MyPlayer;
     public Card[] MyCards;
 }
