@@ -122,6 +122,7 @@ public class TileController : MonoBehaviour
                         canMovement = false;
                         ResetTile();
                         TilesListMvtPossible.Clear();
+                        ResetMovementParameter();
                     }
                     else
                     {
@@ -134,7 +135,7 @@ public class TileController : MonoBehaviour
     }
 
     #region CalculatePortee
-    public void CalculatePortee(PlayerController playerController, Card _card)
+    public void CalculatePortee(PlayerController playerController, Card _card, bool previsualisation = false)
     {
         if (_card.CircleMovement)
         {
@@ -153,8 +154,11 @@ public class TileController : MonoBehaviour
             PorteeKnigth(playerController, _card);
         }
         // can movement player
-        currentPlayer = turnController.Player1Turn() ? playerManager1 : playerManager2;
-        canMovement = true;
+        if (!previsualisation)
+        {
+            currentPlayer = turnController.Player1Turn() ? playerManager1 : playerManager2;
+            canMovement = true;
+        }
     }
 
     private void PorteeLigne(PlayerController playerController, Card _card)
@@ -503,8 +507,6 @@ public class TileController : MonoBehaviour
         }
     }
 
-
-
     private void PorteeStandard(PlayerController playerController, Card _card)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
@@ -548,7 +550,14 @@ public class TileController : MonoBehaviour
     }
     #endregion
 
-
+    public bool IsMoving()
+    {
+        if (currentPlayer != null)
+        {
+            return true;
+        }
+        return false;
+    }
 
     #region Tile Fct parameter
     private Tile GetTileAtPosition(Vector2 position)
@@ -576,6 +585,14 @@ public class TileController : MonoBehaviour
         {
             tile.SetValueToShader("_InPortee", 0);
         }
+    }
+
+    public void ResetMovementParameter()
+    {
+        ResetTile();
+        TilesListMvtPossible.Clear();
+        Debug.Log("bouh");
+        currentPlayer = null;
     }
 
     private bool CheckTileIntoPortee(Tile _tile)

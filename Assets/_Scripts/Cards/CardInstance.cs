@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class CardInstance : MonoBehaviour
 {
     public Card MyCard;
     public PlayerManager MyPlayerManager;
+    private TileController tileController;
 
     private Image myImage;
     private Button myBtn;
@@ -18,6 +20,11 @@ public class CardInstance : MonoBehaviour
         myImage = GetComponent<Image>();
     }
 
+    private void Start()
+    {
+        tileController = TileController.instance;
+    }
+
     public void Initialize(PlayerManager playerManager,Card _card)
     {
         MyCard = _card;
@@ -27,7 +34,6 @@ public class CardInstance : MonoBehaviour
 
     public void UseCard()
     {
-        //Debug.Log("clicked");
         if (isDisable)
         {
             return;
@@ -44,16 +50,20 @@ public class CardInstance : MonoBehaviour
 
     public void PointerEnter()
     {
-        //Debug.Log("hover enter");
-        if (isDisable)
+        if (isDisable || tileController.IsMoving())
         {
             return;
         }
+        MyPlayerManager.PrevisualisationMovement(this);
     }
 
 
     public void PointerExit()
     {
-        //Debug.Log("hover exit");
+        if (isDisable || tileController.IsMoving())
+        {
+            return;
+        }
+        MyPlayerManager.ResetPrevisualisation();
     }
 }

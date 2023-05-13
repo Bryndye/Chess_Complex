@@ -48,6 +48,8 @@ public class Tile : MonoBehaviour
             return;
         }
         EffectUsed = true;
+        myMeshRenderer.material.SetInt("_Show", 1);
+
         switch (MyType)
         {
             case TileType.NoEvent:

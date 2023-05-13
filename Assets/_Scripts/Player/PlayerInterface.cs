@@ -79,10 +79,11 @@ public class PlayerInterface : MonoBehaviour
         for (int i = childCount - 1; i >= 0; i--)
         {
             var child = cardsContainer.GetChild(i).GetComponent<CardInstance>();
-            if (child.MyCard.MyCardType == CardType.Movement)
-            {
-                child.DisableCard();
-            }
+            //if (child.MyCard.MyCardType == CardType.Movement)
+            //{
+            //    child.DisableCard();
+            //}
+            child.DisableCard();
         }
     }
 }

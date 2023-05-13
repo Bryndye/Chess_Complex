@@ -60,4 +60,24 @@ public class PlayerManager : MonoBehaviour
         playerInterface.DeleteCardContainer(_cardInstance);
         RemoveCard(_card);
     }
+
+    public void PrevisualisationMovement(CardInstance _cardInstance)
+    {
+        Card _card = _cardInstance.MyCard;
+        switch (_card.MyCardType)
+        {
+            case CardType.Movement:
+                tileController.CalculatePortee(MyPlayer, _card, true);
+                break;
+            case CardType.Boost:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ResetPrevisualisation()
+    {
+        tileController.ResetMovementParameter();
+    }
 }
