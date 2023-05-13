@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,7 +8,15 @@ public class TileController : MonoBehaviour
 {
     public static TileController instance;
     private TurnController turnController;
+
+    [Header("Tiles parameter")]
     public Tile[] tiles;
+    public Tile[] tilesStayBlank;
+    public Tile[] tilesOut;
+    public const int tilesEventCount = 16;
+    public const int tilesShopCount = 4;
+    public const int tilesRandomCount = 16;
+    public const int tilesKeyCount = 1;
 
     [Header("Movement tile")]
     [SerializeField] private bool canMovement = false;
@@ -25,7 +34,58 @@ public class TileController : MonoBehaviour
     {
         turnController = TurnController.instance;
         tiles = FindObjectsOfType<Tile>();
+        GenerateTilesEvent();
     }
+
+    #region Init Tile Event
+    private void GenerateTilesEvent()
+    {
+        // get all tiles which dont need to put event into
+        List<Tile> tilesEvent = new List<Tile>();
+        foreach (var tile in tiles)
+        {
+            if (!tilesStayBlank.Contains(tile) && !tilesOut.Contains(tile))
+            {
+                tilesEvent.Add(tile);
+            }
+        }
+
+        int randomIndex = Random.Range(0, tilesEvent.Count() - 1);
+        Tile tileKey = tilesEvent[randomIndex];
+        Debug.Log(tileKey + " has key");
+        tileKey.MyType = TileType.Key;
+
+
+        int shopCount = 0;
+        int randomCardCount = 0;
+        int eventCount = 0;
+
+        foreach (var tile in tilesEvent)
+        {
+            if (tile.MyType == TileType.NoEvent)
+            {
+                // Assigner un type de tuile en fonction des compteurs
+                if (shopCount < tilesShopCount)
+                {
+                    tile.MyType = TileType.Shop;
+                    shopCount++;
+                }
+                else if (randomCardCount < tilesRandomCount)
+                {
+                    tile.MyType = TileType.RandomCard;
+                    randomCardCount++;
+                }
+                else if (eventCount < tilesEventCount)
+                {
+                    tile.MyType = TileType.Event;
+                    eventCount++;
+                }
+            }
+        }
+    }
+
+
+    #endregion
 
 
     void Update()
@@ -41,7 +101,7 @@ public class TileController : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
         {
             // La souris est sur un objet UI, ignorer le raycast pour les objets 3D
-            Debug.Log("UI entre souris et 3D");
+            //Debug.Log("UI entre souris et 3D");
             return;
         }
 
@@ -78,7 +138,7 @@ public class TileController : MonoBehaviour
     {
         if (_card.CircleMovement)
         {
-            PorteeSquare(playerController, _card);
+            PorteeSquare2(playerController, _card);
         }
         if (_card.LigneMovement)
         {
@@ -453,6 +513,101 @@ public class TileController : MonoBehaviour
     }
     #endregion
 
+    private void PorteeSquare2(PlayerController playerController, Card _card)
+    {
+        Vector2 posInitPlayer = playerController.currentTile.MyPosition;
+        int normalRange = _card.Portee + playerController.PorteeBoost;
+        int diagonalRange = normalRange + 1;
+
+        // Convertir la position en coordonnées entières
+        int startX = Mathf.RoundToInt(posInitPlayer.x);
+        int startY = Mathf.RoundToInt(posInitPlayer.y);
+
+        // Parcourir les cases dans la portée maximale
+        for (int x = startX - normalRange; x <= startX + normalRange; x++)
+        {
+            for (int y = startY - normalRange; y <= startY + normalRange; y++)
+            {
+                // Vérifier si la case est différente de la position initiale du joueur
+                if (x != startX || y != startY)
+                {
+                    // Calculer la distance entre la position de départ et la case actuelle
+                    int distanceX = Mathf.Abs(x - startX);
+                    int distanceY = Mathf.Abs(y - startY);
+
+                    // Vérifier si la case est dans la portée normale ou diagonale
+                    if (distanceX <= normalRange && distanceY <= normalRange)
+                    {
+                        Vector2 tilePosition = new Vector2(x, y);
+                        Tile tile = GetTileAtPosition(tilePosition);
+                        if (tile != null && !tile.PlaceTaken)
+                        {
+                            if (!LineOfSightBlocked(startX, startY, x, y))
+                            {
+                                SetTileIntoPortee(tile);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private bool LineOfSightBlocked(int startX, int startY, int endX, int endY)
+    {
+        int dx = Mathf.Abs(endX - startX);
+        int dy = Mathf.Abs(endY - startY);
+        int n = 1 + dx + dy;
+        int x = startX;
+        int y = startY;
+        int x_inc = (endX > startX) ? 1 : -1;
+        int y_inc = (endY > startY) ? 1 : -1;
+        int error = dx - dy;
+        dx *= 2;
+        dy *= 2;
+
+        // Ignore the first tile (the player's tile)
+        if (error > 0)
+        {
+            x += x_inc;
+            error -= dy;
+        }
+        else
+        {
+            y += y_inc;
+            error += dx;
+        }
+
+        for (; n > 1; --n) // We start at n > 1 to ignore the player's tile
+        {
+            Vector2 tilePosition = new Vector2(x, y);
+            Tile tile = GetTileAtPosition(tilePosition);
+
+            if (tile != null && tile.PlaceTaken)
+            {
+                return true;
+            }
+
+            if (error > 0)
+            {
+                x += x_inc;
+                error -= dy;
+            }
+            else
+            {
+                y += y_inc;
+                error += dx;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+
+    #region Tile Fct parameter
     private Tile GetTileAtPosition(Vector2 position)
     {
         foreach (Tile tile in tiles)
@@ -491,4 +646,5 @@ public class TileController : MonoBehaviour
         }
         return false;
     }
+    #endregion
 }

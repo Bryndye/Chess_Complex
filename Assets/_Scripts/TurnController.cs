@@ -41,16 +41,14 @@ public class TurnController : MonoBehaviour
     public void NextTurn()
     {
         CurrentTurn = CurrentTurn == Turn.Player1 ? Turn.Player2 : Turn.Player1;
+        PlayerManager currentPM = CurrentTurn == Turn.Player1 ? playerManager1 : playerManager2;
 
         if (CurrentTurn == Turn.Player1)
         {
-            playerManager1.NextTurnSet();
             TurnCount++;
         }
-        else
-        {
-            playerManager2.NextTurnSet();
-        }
+        currentPM.MyCards.Insert(0, EventsManager.Instance.StockCards[1]);
+        currentPM.NextTurnSet();
 
         currentTurnText.text = CurrentTurn.ToString();
         turnCountText.text = TurnCount.ToString();

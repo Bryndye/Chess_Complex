@@ -27,7 +27,7 @@ public class CardInstance : MonoBehaviour
 
     public void UseCard()
     {
-        Debug.Log("clicked");
+        //Debug.Log("clicked");
         if (isDisable)
         {
             return;
@@ -44,7 +44,7 @@ public class CardInstance : MonoBehaviour
 
     public void PointerEnter()
     {
-        Debug.Log("hover enter");
+        //Debug.Log("hover enter");
         if (isDisable)
         {
             return;
@@ -54,6 +54,6 @@ public class CardInstance : MonoBehaviour
 
     public void PointerExit()
     {
-        Debug.Log("hover exit");
+        //Debug.Log("hover exit");
     }
 }
