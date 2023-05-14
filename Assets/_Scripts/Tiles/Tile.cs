@@ -90,6 +90,7 @@ public class Tile : MonoBehaviour
         }
         EffectUsed = true;
         myMeshRenderer.material.SetInt("_Show", 1);
+        SetValueToShader("_hasBeenDiscovering", 1);
 
         var _event = EventsManager.Instance;
         switch (MyType)
