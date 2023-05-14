@@ -55,6 +55,7 @@ public class TileController : MonoBehaviour
         foreach (var tile in tilesOut)
         {
             tile.MyType = TileType.Out;
+            tile.SetTexture();
         }
 
         int randomIndex = UnityEngine.Random.Range(0, tilesEvent.Count() - 1);
@@ -87,6 +88,7 @@ public class TileController : MonoBehaviour
                     tile.MyType = TileType.Event;
                     eventCount++;
                 }
+                tile.SetTexture();
             }
         }
     }
@@ -124,8 +126,15 @@ public class TileController : MonoBehaviour
                 {
                     if (CheckTileIntoPortee(_tile))
                     {
-                        DiscoverTiles(_tile);
+                        if (!currentCard.KnightMovement)
+                        {
+                            DiscoverTiles(_tile);
+                        }
                         playerManager.MyPlayer.SetItemOnTile(_tile);
+                        if (currentCard.KnightMovement)
+                        {
+                            DiscoverTiles(_tile);
+                        }
                         playerManager.HasPlayedMovement = true;
                         canMovement = false;
                         ResetTile();
@@ -594,8 +603,6 @@ public class TileController : MonoBehaviour
 
     public void GetLine(Tile start, Tile end)
     {
-        List<Tile> lineTiles = new List<Tile>();
-
         int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x), sx = start.MyPosition.x < end.MyPosition.x ? 1 : -1;
         int dy = Math.Abs((int)end.MyPosition.y - (int)start.MyPosition.y), sy = start.MyPosition.y < end.MyPosition.y ? 1 : -1;
         int err = (dx > dy ? dx : -dy) / 2, e2;
@@ -605,7 +612,6 @@ public class TileController : MonoBehaviour
             Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
             if (currentTile != null)
             {
-                lineTiles.Add(currentTile);
                 currentTile.SetValueToShader("_Show",1);
             }
             if (start.MyPosition.x == end.MyPosition.x && start.MyPosition.y == end.MyPosition.y) break;
@@ -617,8 +623,6 @@ public class TileController : MonoBehaviour
 
     public void GetDiagonalLine(Tile start, Tile end)
     {
-        List<Tile> diagonalTiles = new List<Tile>();
-
         int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x);
         int dy = Math.Abs((int)end.MyPosition.y - (int)start.MyPosition.y);
         int sx = start.MyPosition.x < end.MyPosition.x ? 1 : -1;
@@ -631,7 +635,6 @@ public class TileController : MonoBehaviour
             Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
             if (currentTile != null)
             {
-                diagonalTiles.Add(currentTile);
                 currentTile.SetValueToShader("_Show", 1);
             }
 

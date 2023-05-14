@@ -166,7 +166,6 @@ public class PlayerInterface : MonoBehaviour
         foreach (var message in messages)
         {
             message.text = messageForText;
-            Debug.Log(turnController.Player1Turn());
             if (turnController.Player1Turn())
             {
                 message.color = Color.black;

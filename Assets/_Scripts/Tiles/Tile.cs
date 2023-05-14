@@ -34,6 +34,33 @@ public class Tile : MonoBehaviour
         myMeshRenderer = GetComponent<MeshRenderer>();
     }
 
+    public void SetTexture()
+    {
+        switch (MyType)
+        {
+            case TileType.NoEvent:
+                break;
+            case TileType.RandomCard:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
+                Debug.Log(1);
+                break;
+            case TileType.Shop:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
+                break;
+            case TileType.Event:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureEvent);
+                break;
+            case TileType.Key:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureKey);
+                break;
+            case TileType.Out:
+                break;
+            default:
+                break;
+        }
+    }
+
+
     public void EnterTile(PlayerManager playerManager = null)
     {
         PlaceTaken = true;
@@ -72,28 +99,24 @@ public class Tile : MonoBehaviour
             case TileType.RandomCard:
                 Card _card = _event.RandomCard();
                 playerManager.AddCard(_card);
-                myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
                 playerManager.AddScoreToPlayer(1);
                 _event.TriggerEventUI(MyType, _card);
                 break;
 
             case TileType.Event:
                 _event.Event();
-                myMeshRenderer.material.SetTexture("_TextureShow", textureEvent);
                 playerManager.AddScoreToPlayer(2);
                 _event.TriggerEventUI(MyType);
                 break;
 
             case TileType.Shop:
                 _event.SetShop();
-                myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
                 playerManager.AddScoreToPlayer(5);
                 _event.TriggerEventUI(MyType);
                 break;
 
             case TileType.Key:
                 playerManager.GetKey();
-                myMeshRenderer.material.SetTexture("_TextureShow", textureKey);
                 playerManager.AddScoreToPlayer(20);
                 _event.TriggerEventUI(MyType);
                 break;
