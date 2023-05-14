@@ -18,6 +18,10 @@ public class PlayerManager : MonoBehaviour
 
     public bool HasPlayedMovement = false;
 
+    [Header("Scores")]
+    public int Score = 0;
+    public bool HasKey = false;
+
     private void Start()
     {
         tileController = TileController.instance;
@@ -81,5 +85,11 @@ public class PlayerManager : MonoBehaviour
     public void ResetPrevisualisation()
     {
         tileController.ResetMovementParameter();
+    }
+
+    public void GetKey()
+    {
+        HasKey = true;
+        Score += 20;
     }
 }

@@ -16,8 +16,8 @@ public class TurnController : MonoBehaviour
     private TileController tileController;
 
 
-    [SerializeField] PlayerManager playerManager1;
-    [SerializeField] PlayerManager playerManager2;
+    public PlayerManager playerManager1;
+    public PlayerManager playerManager2;
 
     public Turn CurrentTurn = Turn.Player2;
     public int TurnCount = 0;
@@ -48,19 +48,27 @@ public class TurnController : MonoBehaviour
     {
         return CurrentTurn == Turn.Player1;
     }
+    public PlayerManager Player1ManagerTurn()
+    {
+        return CurrentTurn == Turn.Player1 ? playerManager1 : playerManager2;
+    }
+
 
     public void NextTurn()
     {
         tileController.ResetMovementParameter();
 
         CurrentTurn = CurrentTurn == Turn.Player1 ? Turn.Player2 : Turn.Player1;
-        PlayerManager currentPM = CurrentTurn == Turn.Player1 ? playerManager1 : playerManager2;
+        PlayerManager currentPM = Player1ManagerTurn();
 
         if (CurrentTurn == Turn.Player1)
         {
             TurnCount++;
         }
-        currentPM.MyCards.Insert(0, EventsManager.Instance.StockCards[1]);
+        if (!currentPM.MyCards.Contains(EventsManager.Instance.StockCards[1]))
+        {
+            currentPM.MyCards.Insert(0, EventsManager.Instance.StockCards[1]);
+        }
         currentPM.NextTurnSet();
 
         currentTurnText.text = CurrentTurn.ToString();

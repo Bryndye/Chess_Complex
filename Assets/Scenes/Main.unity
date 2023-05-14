@@ -371,6 +371,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dde73b1795709f42a105296926ec898, type: 3}
+--- !u!224 &349112453 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 392663486600002962, guid: bb8d52d7964541248afca4e01d9f54d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5062066363383597415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &478056982 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7253518234341718548, guid: 4dde73b1795709f42a105296926ec898,
@@ -972,6 +978,19 @@ PrefabInstance:
       propertyPath: cardsContainer
       value: 
       objectReference: {fileID: 1598678141}
+    - target: {fileID: 259703939, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
+      propertyPath: cardShoPrefab
+      value: 
+      objectReference: {fileID: 4699806381107424473, guid: 7f827f1894688764ab24a0b7dac08fad,
+        type: 3}
+    - target: {fileID: 259703939, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
+      propertyPath: shopInterface
+      value: 
+      objectReference: {fileID: 5062066363383597416}
+    - target: {fileID: 259703939, guid: a4bc535c7c8511e4a895405334ba3c60, type: 3}
+      propertyPath: shopContainerCards
+      value: 
+      objectReference: {fileID: 349112453}
     - target: {fileID: 4856292359966049728, guid: a4bc535c7c8511e4a895405334ba3c60,
         type: 3}
       propertyPath: m_Name
@@ -1173,3 +1192,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb8d52d7964541248afca4e01d9f54d4, type: 3}
+--- !u!1 &5062066363383597416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6414119475652589444, guid: bb8d52d7964541248afca4e01d9f54d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 5062066363383597415}
+  m_PrefabAsset: {fileID: 0}

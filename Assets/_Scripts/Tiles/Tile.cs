@@ -20,6 +20,12 @@ public class Tile : MonoBehaviour
     public bool PlaceTaken = false;
     public int score = 0;
 
+    [Space]
+    [SerializeField] private Texture2D textureRandomCard;
+    [SerializeField] private Texture2D textureShop;
+    [SerializeField] private Texture2D textureEvent;
+    [SerializeField] private Texture2D textureKey;
+
     private MeshRenderer myMeshRenderer;
 
     private void Awake()
@@ -56,15 +62,22 @@ public class Tile : MonoBehaviour
                 break;
             case TileType.RandomCard:
                 playerManager.AddCard(EventsManager.Instance.RandomCard());
+                myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
                 break;
             case TileType.Event:
                 Debug.Log(playerManager.gameObject + " triggers EVENT");
+                EventsManager.Instance.Event();
+                myMeshRenderer.material.SetTexture("_TextureShow", textureEvent);
                 break;
             case TileType.Shop:
                 Debug.Log(playerManager.gameObject + " shop!");
+                EventsManager.Instance.SetShop();
+                myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
                 break;
             case TileType.Key:
-                Debug.Log(playerManager.gameObject + " gets the key!");
+                Debug.Log(playerManager.Player + " gets the key!");
+                playerManager.GetKey();
+                myMeshRenderer.material.SetTexture("_TextureShow", textureKey);
                 break;
             default:
                 break;
@@ -88,9 +101,3 @@ public class Tile : MonoBehaviour
         SetValueToShader("_IsHover", 0);
     }
 }
-
-
-/* REGLE
- * Si tile est utilisé pour LA PREMIERE FOIS, son effet est déclanché et effet = neutre après utilisation
- * Si la tile couleur == joueur color, le joueur en question gagne une carte PION, CHEVALIER
- */

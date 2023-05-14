@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInterface : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class PlayerInterface : MonoBehaviour
 
     private void Start()
     {
-        turnController = TurnController.instance;
+        turnController = GetComponent<TurnController>();
     }
 
     public void NextTurnSetInterface()
@@ -42,7 +43,7 @@ public class PlayerInterface : MonoBehaviour
         List<Card> _cards = playerManager.MyCards;
         foreach (Card card in _cards) {
             var cardInstance = Instantiate(cardPrefab, cardsContainer);
-            cardInstance.Initialize(playerManager, card);
+            cardInstance.Initialize(playerManager, card, turnController);
         }
     }
 
@@ -69,6 +70,16 @@ public class PlayerInterface : MonoBehaviour
             {
                 Destroy(cardInstance.gameObject);
             }
+        }
+    }
+
+    public void AddCardContainer(Card _card, bool _fromShop = false)
+    {
+        var _cardInstance = Instantiate(cardPrefab, cardsContainer);
+        _cardInstance.Initialize(turnController.Player1ManagerTurn(), _card, turnController);
+        if (_fromShop)
+        {
+            _cardInstance.DisableCard();
         }
     }
 
