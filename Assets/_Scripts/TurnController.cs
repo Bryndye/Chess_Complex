@@ -14,7 +14,7 @@ public class TurnController : MonoBehaviour
     public static TurnController instance;
     private PlayerInterface playerInterface;
     private TileController tileController;
-
+    private EventsManager eventsManager;
 
     public PlayerManager playerManager1;
     public PlayerManager playerManager2;
@@ -36,12 +36,13 @@ public class TurnController : MonoBehaviour
     {
         playerInterface = PlayerInterface.instance;
         tileController = TileController.instance;
+        eventsManager = GetComponent<EventsManager>();
         NextTurn();
     }
 
     private void Update()
     {
-        nextTurnBtn.interactable = !tileController.IsMoving();
+        nextTurnBtn.interactable = !tileController.IsMoving() && !eventsManager.IsShoping;
     }
 
     public bool Player1Turn()

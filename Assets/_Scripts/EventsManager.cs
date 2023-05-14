@@ -12,6 +12,7 @@ public class EventsManager : MonoBehaviour
     public Card[] StockCards;
 
     [Header("Shop")]
+    public bool IsShoping = false;
     [SerializeField] private CardShopInstance cardShoPrefab;
     [SerializeField] private GameObject shopInterface;
     [SerializeField] private Transform shopContainerCards;
@@ -37,6 +38,7 @@ public class EventsManager : MonoBehaviour
 
     public void SetShop()
     {
+        IsShoping = true;
         Card[] cards = new Card[] { RandomCard(), RandomCard(), RandomCard() };
         shopInterface.SetActive(true);
         foreach (var card in cards)
@@ -52,6 +54,7 @@ public class EventsManager : MonoBehaviour
         pm.AddCard(_card);
         playerInterface.AddCardContainer(_card, true);
         ClearContainer();
+        IsShoping = false;
     }
 
     private void ClearContainer()
