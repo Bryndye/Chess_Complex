@@ -28,7 +28,6 @@ public class CardInstance : MonoBehaviour
     {
         MyCard = _card;
         MyPlayerManager = playerManager;
-        Debug.Log(myImage);
         myImage.sprite = MyCard.FrontSprite[turnController.Player1Turn() ? 0 : 1];
     }
 

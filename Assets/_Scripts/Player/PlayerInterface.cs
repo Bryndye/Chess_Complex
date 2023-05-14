@@ -24,8 +24,13 @@ public class PlayerInterface : MonoBehaviour
         turnController = GetComponent<TurnController>();
     }
 
-    public void NextTurnSetInterface()
+    public void NextTurnSetInterface(TurnController _turnController)
     {
+        if (turnController == null)
+        {
+            turnController = _turnController;
+        }
+        Debug.Log(turnController);
         if (turnController.Player1Turn())
         {
             ClearCardsContainer();

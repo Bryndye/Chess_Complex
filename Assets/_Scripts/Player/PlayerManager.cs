@@ -90,6 +90,11 @@ public class PlayerManager : MonoBehaviour
     public void GetKey()
     {
         HasKey = true;
-        Score += 20;
+        //AddScoreToPlayer(20);
+    }
+
+    public void AddScoreToPlayer(int _score)
+    {
+        Score += _score;
     }
 }

@@ -50,6 +50,11 @@ public class TileController : MonoBehaviour
             }
         }
 
+        foreach (var tile in tilesOut)
+        {
+            tile.MyType = TileType.Out;
+        }
+
         int randomIndex = Random.Range(0, tilesEvent.Count() - 1);
         Tile tileKey = tilesEvent[randomIndex];
         Debug.Log(tileKey + " has key");

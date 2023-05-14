@@ -8,7 +8,8 @@ public enum TileType
     RandomCard,
     Shop,
     Event,
-    Key
+    Key,
+    Out
 }
 
 public class Tile : MonoBehaviour
@@ -49,6 +50,13 @@ public class Tile : MonoBehaviour
 
     private void UseEffect(PlayerManager playerManager)
     {
+        var victory = VictoryManager.instance;
+        if (MyType == TileType.Out && victory.eventKeyStarted)
+        {
+            playerManager.AddScoreToPlayer(10);
+            victory.PlayerOnTileOut(playerManager, this);
+            return;
+        }
         if (EffectUsed)
         {
             return;
@@ -63,21 +71,25 @@ public class Tile : MonoBehaviour
             case TileType.RandomCard:
                 playerManager.AddCard(EventsManager.Instance.RandomCard());
                 myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
+                playerManager.AddScoreToPlayer(1);
                 break;
             case TileType.Event:
                 Debug.Log(playerManager.gameObject + " triggers EVENT");
                 EventsManager.Instance.Event();
                 myMeshRenderer.material.SetTexture("_TextureShow", textureEvent);
+                playerManager.AddScoreToPlayer(2);
                 break;
             case TileType.Shop:
                 Debug.Log(playerManager.gameObject + " shop!");
                 EventsManager.Instance.SetShop();
                 myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
+                playerManager.AddScoreToPlayer(5);
                 break;
             case TileType.Key:
                 Debug.Log(playerManager.Player + " gets the key!");
                 playerManager.GetKey();
                 myMeshRenderer.material.SetTexture("_TextureShow", textureKey);
+                playerManager.AddScoreToPlayer(20);
                 break;
             default:
                 break;
