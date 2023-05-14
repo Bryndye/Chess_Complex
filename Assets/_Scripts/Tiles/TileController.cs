@@ -126,6 +126,8 @@ public class TileController : MonoBehaviour
                 {
                     if (CheckTileIntoPortee(_tile))
                     {
+                        playerManager.HasPlayedMovement = true;
+                        canMovement = false;
                         if (!currentCard.KnightMovement)
                         {
                             DiscoverTiles(_tile);
@@ -135,8 +137,7 @@ public class TileController : MonoBehaviour
                         {
                             DiscoverTiles(_tile);
                         }
-                        playerManager.HasPlayedMovement = true;
-                        canMovement = false;
+
                         ResetTile();
                         TilesListMvtPossible.Clear();
                         ResetMovementParameter();

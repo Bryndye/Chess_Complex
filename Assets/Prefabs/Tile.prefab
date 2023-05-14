@@ -115,7 +115,7 @@ MonoBehaviour:
   EffectUsed: 0
   PlaceTaken: 0
   score: 0
-  textureRandomCard: {fileID: 2800000, guid: 45468c980f2f4b34b9fc22be10b4ee8a, type: 3}
-  textureShop: {fileID: 2800000, guid: bf0f65f1031d4d64d9af4a48232160f3, type: 3}
-  textureEvent: {fileID: 2800000, guid: cc0a59ede1e5b6744a129a23fb6f4813, type: 3}
-  textureKey: {fileID: 2800000, guid: 295a3b4d3c1b9fa469b790bc139fd5d9, type: 3}
+  textureRandomCard: {fileID: 2800000, guid: 22b953d707f4ff44b91c2dd861af3fd2, type: 3}
+  textureShop: {fileID: 2800000, guid: fb425a64b8b9c7d499ae5a62d4125882, type: 3}
+  textureEvent: {fileID: 2800000, guid: 4491ef0ee8e4fc2489d6f9ccb5697b61, type: 3}
+  textureKey: {fileID: 2800000, guid: 2d72ddf0259283142af7050d67edc96a, type: 3}
