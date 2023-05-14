@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInterface : MonoBehaviour
 {
@@ -20,11 +23,16 @@ public class PlayerInterface : MonoBehaviour
 
     private void Start()
     {
-        turnController = TurnController.instance;
+        turnController = GetComponent<TurnController>();
     }
 
-    public void NextTurnSetInterface()
+    public void NextTurnSetInterface(TurnController _turnController)
     {
+        if (turnController == null)
+        {
+            turnController = _turnController;
+        }
+
         if (turnController.Player1Turn())
         {
             ClearCardsContainer();
@@ -42,7 +50,7 @@ public class PlayerInterface : MonoBehaviour
         List<Card> _cards = playerManager.MyCards;
         foreach (Card card in _cards) {
             var cardInstance = Instantiate(cardPrefab, cardsContainer);
-            cardInstance.Initialize(playerManager, card);
+            cardInstance.Initialize(playerManager, card, turnController);
         }
     }
 
@@ -72,6 +80,16 @@ public class PlayerInterface : MonoBehaviour
         }
     }
 
+    public void AddCardContainer(Card _card, bool _fromShop = false)
+    {
+        var _cardInstance = Instantiate(cardPrefab, cardsContainer);
+        _cardInstance.Initialize(turnController.Player1ManagerTurn(), _card, turnController);
+        if (_fromShop)
+        {
+            _cardInstance.DisableCard();
+        }
+    }
+
     public void SetCardDisable()
     {
         int childCount = cardsContainer.childCount;
@@ -86,4 +104,77 @@ public class PlayerInterface : MonoBehaviour
             child.DisableCard();
         }
     }
+
+    #region Event UI
+    [Header("UI")]
+    [SerializeField] private GameObject gameObjectEventUI;
+    [SerializeField] private Animator anim;
+    [SerializeField] private TextMeshProUGUI[] messages;
+    [SerializeField] private Image imageCard;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image backgroundImage2;
+    [SerializeField] private Sprite keySprite;
+
+    public void TriggerEventUI(TileType _tile, Card _card = null)
+    {
+        gameObjectEventUI.SetActive(true);
+        string messageForText = "";
+        switch (_tile)
+        {
+            case TileType.NoEvent:
+                break;
+            case TileType.RandomCard:
+                anim.SetTrigger("RandomCard");
+                messageForText = "You receive : \n" + _card.name + " card!";
+                imageCard.sprite = _card.FrontSprite[turnController.Player1Turn() ? 0 : 1];
+                break;
+            case TileType.Shop:
+                break;
+            case TileType.Event:
+                anim.SetTrigger("EventRedCard");
+                messageForText = "You trigger an event!";
+                backgroundImage2.gameObject.SetActive(true);
+                backgroundImage2.color = new Color32(180,55,55,255);
+                break;
+            case TileType.Key:
+                anim.SetTrigger("Key");
+                messageForText = "You obtained the key!";
+                imageCard.sprite = keySprite;
+                break;
+            case TileType.Out:
+                break;
+            default:
+                break;
+        }
+        foreach (var message in messages)
+        {
+            message.text = messageForText;
+        }
+    }
+
+    public void NextTurnUI()
+    {
+        string messageForText = turnController.Player1Turn() ? "Player 1 Turn" : "Player 2 Turn";
+        gameObjectEventUI.SetActive(true);
+        backgroundImage2.gameObject.SetActive(true);
+        backgroundImage2.color = turnController.Player1Turn() ? Color.white : Color.black;
+
+        foreach (var message in messages)
+        {
+            message.text = messageForText;
+            if (turnController.Player1Turn())
+            {
+                message.color = Color.black;
+            }
+            else
+            {
+                message.color = Color.white;
+            }
+        }
+
+        anim.SetTrigger("NewTurn");
+        Debug.Log(backgroundImage2.color);
+        backgroundImage2.color = turnController.Player1Turn() ? Color.white : Color.black;
+    }
+    #endregion
 }

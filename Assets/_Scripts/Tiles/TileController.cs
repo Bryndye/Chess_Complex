@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ public class TileController : MonoBehaviour
     [SerializeField] private bool canMovement = false;
     public List<Tile> TilesListMvtPossible;
     private PlayerManager currentPlayer;
+    private Card currentCard;
     [SerializeField] PlayerManager playerManager1;
     [SerializeField] PlayerManager playerManager2;
 
@@ -50,7 +52,13 @@ public class TileController : MonoBehaviour
             }
         }
 
-        int randomIndex = Random.Range(0, tilesEvent.Count() - 1);
+        foreach (var tile in tilesOut)
+        {
+            tile.MyType = TileType.Out;
+            tile.SetTexture();
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, tilesEvent.Count() - 1);
         Tile tileKey = tilesEvent[randomIndex];
         Debug.Log(tileKey + " has key");
         tileKey.MyType = TileType.Key;
@@ -80,6 +88,7 @@ public class TileController : MonoBehaviour
                     tile.MyType = TileType.Event;
                     eventCount++;
                 }
+                tile.SetTexture();
             }
         }
     }
@@ -117,7 +126,15 @@ public class TileController : MonoBehaviour
                 {
                     if (CheckTileIntoPortee(_tile))
                     {
+                        if (!currentCard.KnightMovement)
+                        {
+                            DiscoverTiles(_tile);
+                        }
                         playerManager.MyPlayer.SetItemOnTile(_tile);
+                        if (currentCard.KnightMovement)
+                        {
+                            DiscoverTiles(_tile);
+                        }
                         playerManager.HasPlayedMovement = true;
                         canMovement = false;
                         ResetTile();
@@ -134,34 +151,57 @@ public class TileController : MonoBehaviour
         }
     }
 
+    private void DiscoverTiles(Tile _end)
+    {
+        if (currentCard.CircleMovement)
+        {
+            //PorteeSquare(currentPlayer.MyPlayer, currentCard, previsualisation);
+        }
+        if (currentCard.LigneMovement)
+        {
+            //PorteeLigne(currentPlayer.MyPlayer, currentCard, previsualisation);
+            GetLine(currentPlayer.MyPlayer.currentTile, _end);
+        }
+        if (currentCard.DiagonaleMovement)
+        {
+            //PorteeDiagonale(currentPlayer.MyPlayer, currentCard, previsualisation);
+            GetDiagonalLine(currentPlayer.MyPlayer.currentTile, _end);
+        }
+        if (currentCard.KnightMovement)
+        {
+            PorteeSquare(currentPlayer.MyPlayer, currentCard, false, true);
+        }
+    }
+
     #region CalculatePortee
     public void CalculatePortee(PlayerController playerController, Card _card, bool previsualisation = false)
     {
         if (_card.CircleMovement)
         {
-            PorteeSquare(playerController, _card);
+            PorteeSquare(playerController, _card, previsualisation);
         }
         if (_card.LigneMovement)
         {
-            PorteeLigne(playerController, _card);
+            PorteeLigne(playerController, _card, previsualisation);
         }
         if (_card.DiagonaleMovement)
         {
-            PorteeDiagonale(playerController, _card);
+            PorteeDiagonale(playerController, _card, previsualisation);
         }
         if (_card.KnightMovement)
         {
-            PorteeKnigth(playerController, _card);
+            PorteeKnigth(playerController, _card, previsualisation);
         }
         // can movement player
         if (!previsualisation)
         {
+            currentCard = _card;
             currentPlayer = turnController.Player1Turn() ? playerManager1 : playerManager2;
             canMovement = true;
         }
     }
 
-    private void PorteeLigne(PlayerController playerController, Card _card)
+    private void PorteeLigne(PlayerController playerController, Card _card, bool previsualisation = false)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
         int maxRange = _card.Portee + playerController.PorteeBoost;
@@ -274,7 +314,7 @@ public class TileController : MonoBehaviour
         }
     }
 
-    private void PorteeDiagonale(PlayerController playerController, Card _card)
+    private void PorteeDiagonale(PlayerController playerController, Card _card, bool previsualisation = false)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
         int maxRange = _card.Portee + playerController.PorteeBoost;
@@ -386,11 +426,19 @@ public class TileController : MonoBehaviour
         }
     }
 
-    private void PorteeSquare(PlayerController playerController, Card _card)
+    private void PorteeSquare(PlayerController playerController, Card _card, bool previsualisation = false, bool forDiscovering = false)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
-        int normalRange = _card.Portee + playerController.PorteeBoost;
-        int diagonalRange = normalRange + 1;
+
+        int normalRange = 0;
+        if (forDiscovering)
+        {
+            normalRange = 1;
+        }
+        else
+        {
+            normalRange = _card.Portee + playerController.PorteeBoost;
+        }
 
         // Convertir la position en coordonnées entières
         int startX = Mathf.RoundToInt(posInitPlayer.x);
@@ -415,7 +463,11 @@ public class TileController : MonoBehaviour
                         Tile tile = GetTileAtPosition(tilePosition);
                         if (tile != null && !tile.PlaceTaken)
                         {
-                            if (!LineOfSightBlocked(startX, startY, x, y))
+                            if (forDiscovering)
+                            {
+                                tile.SetValueToShader("_Show", 1);
+                            }
+                            else if (!LineOfSightBlocked(startX, startY, x, y))
                             {
                                 SetTileIntoPortee(tile);
                             }
@@ -476,7 +528,7 @@ public class TileController : MonoBehaviour
         return false;
     }
 
-    private void PorteeKnigth(PlayerController playerController, Card _card)
+    private void PorteeKnigth(PlayerController playerController, Card _card, bool previsualisation = false)
     {
         Vector2 posInitPlayer = playerController.currentTile.MyPosition;
         int boost = playerController.PorteeBoost;
@@ -548,6 +600,61 @@ public class TileController : MonoBehaviour
             }
         }
     }
+
+    public void GetLine(Tile start, Tile end)
+    {
+        int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x), sx = start.MyPosition.x < end.MyPosition.x ? 1 : -1;
+        int dy = Math.Abs((int)end.MyPosition.y - (int)start.MyPosition.y), sy = start.MyPosition.y < end.MyPosition.y ? 1 : -1;
+        int err = (dx > dy ? dx : -dy) / 2, e2;
+
+        while (true)
+        {
+            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
+            if (currentTile != null)
+            {
+                currentTile.SetValueToShader("_Show",1);
+            }
+            if (start.MyPosition.x == end.MyPosition.x && start.MyPosition.y == end.MyPosition.y) break;
+            e2 = err;
+            if (e2 > -dx) { err -= dy; start.MyPosition.x += sx; }
+            if (e2 < dy) { err += dx; start.MyPosition.y += sy; }
+        }
+    }
+
+    public void GetDiagonalLine(Tile start, Tile end)
+    {
+        int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x);
+        int dy = Math.Abs((int)end.MyPosition.y - (int)start.MyPosition.y);
+        int sx = start.MyPosition.x < end.MyPosition.x ? 1 : -1;
+        int sy = start.MyPosition.y < end.MyPosition.y ? 1 : -1;
+        int err = dx - dy;
+        int e2;
+
+        while (true)
+        {
+            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
+            if (currentTile != null)
+            {
+                currentTile.SetValueToShader("_Show", 1);
+            }
+
+            if (start.MyPosition.x == end.MyPosition.x && start.MyPosition.y == end.MyPosition.y)
+                break;
+
+            e2 = 2 * err;
+            if (e2 > -dy)
+            {
+                err -= dy;
+                start.MyPosition.x += sx;
+            }
+            if (e2 < dx)
+            {
+                err += dx;
+                start.MyPosition.y += sy;
+            }
+        }
+    }
+
     #endregion
 
     public bool IsMoving()
@@ -591,8 +698,8 @@ public class TileController : MonoBehaviour
     {
         ResetTile();
         TilesListMvtPossible.Clear();
-        Debug.Log("bouh");
         currentPlayer = null;
+        currentCard = null;
     }
 
     private bool CheckTileIntoPortee(Tile _tile)

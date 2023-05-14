@@ -1,17 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EventsManager : MonoBehaviour
 {
     public static EventsManager Instance;
+    private TurnController turnController;
+    private PlayerInterface playerInterface;
 
     public Card[] StockCards;
+
+    [Header("Shop")]
+    public bool IsShoping = false;
+    [SerializeField] private CardShopInstance cardShoPrefab;
     [SerializeField] private GameObject shopInterface;
+    [SerializeField] private Transform shopContainerCards;
 
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        turnController = TurnController.instance;
+        playerInterface = PlayerInterface.instance;
+        shopInterface.SetActive(false);
     }
 
     public Card RandomCard()
@@ -23,7 +39,48 @@ public class EventsManager : MonoBehaviour
 
     public void SetShop()
     {
-        Card[] card = new Card[] { RandomCard(), RandomCard(), RandomCard() };
+        IsShoping = true;
+        Card[] cards = new Card[] { RandomCard(), RandomCard(), RandomCard() };
         shopInterface.SetActive(true);
+        foreach (var card in cards)
+        {
+            var cardShopInstance = Instantiate(cardShoPrefab, shopContainerCards);
+            cardShopInstance.MyCard = card;
+        }
+    }
+    public void SelectCardFromShop(Card _card)
+    {
+        shopInterface.SetActive(false);
+        PlayerManager pm = turnController.Player1ManagerTurn();
+        pm.AddCard(_card);
+        playerInterface.AddCardContainer(_card, true);
+        ClearContainer();
+        IsShoping = false;
+    }
+
+    public void AddCardUI(Card _card)
+    {
+        playerInterface.AddCardContainer(_card, true);
+    }
+
+    private void ClearContainer()
+    {
+        int childCount = shopContainerCards.childCount;
+
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            var cardInstance = shopContainerCards.GetChild(i).GetComponent<CardShopInstance>();
+            Destroy(cardInstance.gameObject);
+        }
+    }
+
+    public void Event()
+    {
+
+    }
+
+    public void TriggerEventUI(TileType _tile, Card _card = null)
+    {
+        playerInterface.TriggerEventUI(_tile, _card);
     }
 }

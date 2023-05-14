@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7f6bf5a5d88e345bdff862f89bc1db, type: 3}
   m_Name: King
   m_EditorClassIdentifier: 
+  MyCardType: 0
   FrontSprite:
   - {fileID: 21300000, guid: 6643781d0cdc844408cbf92f9874ec0f, type: 3}
   - {fileID: 21300000, guid: c376dd9b38ec95643907e08320fa825d, type: 3}
   BackSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   Portee: 1
-  LigneMovement: 0
-  Diagonalemovement: 0
-  CavalierMovement: 0
-  CircleMovement: 1
+  LigneMovement: 1
+  DiagonaleMovement: 1
+  KnightMovement: 0
+  CircleMovement: 0
+  BoostMovement: 0
   Description: C pa bien

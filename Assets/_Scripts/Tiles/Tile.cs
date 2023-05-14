@@ -8,7 +8,8 @@ public enum TileType
     RandomCard,
     Shop,
     Event,
-    Key
+    Key,
+    Out
 }
 
 public class Tile : MonoBehaviour
@@ -20,12 +21,45 @@ public class Tile : MonoBehaviour
     public bool PlaceTaken = false;
     public int score = 0;
 
+    [Space]
+    [SerializeField] private Texture2D textureRandomCard;
+    [SerializeField] private Texture2D textureShop;
+    [SerializeField] private Texture2D textureEvent;
+    [SerializeField] private Texture2D textureKey;
+
     private MeshRenderer myMeshRenderer;
 
     private void Awake()
     {
         myMeshRenderer = GetComponent<MeshRenderer>();
     }
+
+    public void SetTexture()
+    {
+        switch (MyType)
+        {
+            case TileType.NoEvent:
+                break;
+            case TileType.RandomCard:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
+                Debug.Log(1);
+                break;
+            case TileType.Shop:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
+                break;
+            case TileType.Event:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureEvent);
+                break;
+            case TileType.Key:
+                myMeshRenderer.material.SetTexture("_TextureShow", textureKey);
+                break;
+            case TileType.Out:
+                break;
+            default:
+                break;
+        }
+    }
+
 
     public void EnterTile(PlayerManager playerManager = null)
     {
@@ -43,28 +77,50 @@ public class Tile : MonoBehaviour
 
     private void UseEffect(PlayerManager playerManager)
     {
+        var victory = VictoryManager.instance;
+        if (MyType == TileType.Out && victory.eventKeyStarted)
+        {
+            playerManager.AddScoreToPlayer(10);
+            victory.PlayerOnTileOut(playerManager, this);
+            return;
+        }
         if (EffectUsed)
         {
             return;
         }
         EffectUsed = true;
         myMeshRenderer.material.SetInt("_Show", 1);
+        SetValueToShader("_hasBeenDiscovering", 1);
 
+        var _event = EventsManager.Instance;
         switch (MyType)
         {
             case TileType.NoEvent:
                 break;
             case TileType.RandomCard:
-                playerManager.AddCard(EventsManager.Instance.RandomCard());
+                Card _card = _event.RandomCard();
+                playerManager.AddCard(_card);
+                playerManager.AddScoreToPlayer(1);
+                _event.TriggerEventUI(MyType, _card);
+                _event.AddCardUI(_card);
                 break;
+
             case TileType.Event:
-                Debug.Log(playerManager.gameObject + " triggers EVENT");
+                _event.Event();
+                playerManager.AddScoreToPlayer(2);
+                _event.TriggerEventUI(MyType);
                 break;
+
             case TileType.Shop:
-                Debug.Log(playerManager.gameObject + " shop!");
+                _event.SetShop();
+                playerManager.AddScoreToPlayer(5);
+                _event.TriggerEventUI(MyType);
                 break;
+
             case TileType.Key:
-                Debug.Log(playerManager.gameObject + " gets the key!");
+                playerManager.GetKey();
+                playerManager.AddScoreToPlayer(20);
+                _event.TriggerEventUI(MyType);
                 break;
             default:
                 break;
@@ -88,9 +144,3 @@ public class Tile : MonoBehaviour
         SetValueToShader("_IsHover", 0);
     }
 }
-
-
-/* REGLE
- * Si tile est utilisé pour LA PREMIERE FOIS, son effet est déclanché et effet = neutre après utilisation
- * Si la tile couleur == joueur color, le joueur en question gagne une carte PION, CHEVALIER
- */
