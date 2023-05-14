@@ -42,7 +42,6 @@ public class Tile : MonoBehaviour
                 break;
             case TileType.RandomCard:
                 myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
-                Debug.Log(1);
                 break;
             case TileType.Shop:
                 myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
@@ -106,9 +105,8 @@ public class Tile : MonoBehaviour
                 break;
 
             case TileType.Event:
-                _event.Event();
+                _event.Event(this);
                 playerManager.AddScoreToPlayer(2);
-                _event.TriggerEventUI(MyType);
                 break;
 
             case TileType.Shop:

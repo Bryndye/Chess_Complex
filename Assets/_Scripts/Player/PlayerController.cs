@@ -5,21 +5,24 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerManager myPlayerManager;
-    Animator myAnimator;
+    protected Animator myAnimator;
 
     [Header("Tile paramaters")]
     public Tile TileStart;
     public Tile currentTile;
     public int PorteeBoost = 0;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         myAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
     {
-        SetItemOnTile(TileStart);
+        if (TileStart != null)
+        {
+            SetItemOnTile(TileStart);
+        }
     }
 
     public void SetItemOnTile(Tile _tile)
@@ -30,9 +33,9 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 tilePositon = _tile.transform.position;
+        currentTile = _tile;
         transform.localPosition = new Vector3(tilePositon.x, tilePositon.y + 0.8f, tilePositon.z);
         _tile.EnterTile(myPlayerManager);
         myAnimator.SetTrigger("SetPosition");
-        currentTile = _tile;
     }
 }

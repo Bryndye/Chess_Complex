@@ -132,9 +132,10 @@ public class PlayerInterface : MonoBehaviour
                 break;
             case TileType.Event:
                 anim.SetTrigger("EventRedCard");
-                messageForText = "You trigger an event!";
+                messageForText = "You trigger an event!\n" + _card.name;
                 backgroundImage2.gameObject.SetActive(true);
                 backgroundImage2.color = new Color32(180,55,55,255);
+                imageCard.sprite = _card.FrontSprite[0];
                 break;
             case TileType.Key:
                 anim.SetTrigger("Key");
@@ -173,7 +174,6 @@ public class PlayerInterface : MonoBehaviour
         }
 
         anim.SetTrigger("NewTurn");
-        Debug.Log(backgroundImage2.color);
         backgroundImage2.color = turnController.Player1Turn() ? Color.white : Color.black;
     }
     #endregion
