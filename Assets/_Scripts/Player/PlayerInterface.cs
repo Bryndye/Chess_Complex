@@ -112,8 +112,8 @@ public class PlayerInterface : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] messages;
     [SerializeField] private Image imageCard;
     [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image backgroundImage2;
     [SerializeField] private Sprite keySprite;
-    private object textMeshPro;
 
     public void TriggerEventUI(TileType _tile, Card _card = null)
     {
@@ -133,6 +133,8 @@ public class PlayerInterface : MonoBehaviour
             case TileType.Event:
                 anim.SetTrigger("EventRedCard");
                 messageForText = "You trigger an event!";
+                backgroundImage2.gameObject.SetActive(true);
+                backgroundImage2.color = new Color32(180,55,55,255);
                 break;
             case TileType.Key:
                 anim.SetTrigger("Key");
@@ -154,15 +156,9 @@ public class PlayerInterface : MonoBehaviour
     {
         string messageForText = turnController.Player1Turn() ? "Player 1 Turn" : "Player 2 Turn";
         gameObjectEventUI.SetActive(true);
-        backgroundImage.color = turnController.Player1Turn() ? Color.white : Color.black;
-        //if (turnController.Player1Turn())
-        //{
-        //    backgroundImage.color = Color.white;
-        //}
-        //else
-        //{
-        //    backgroundImage.color = Color.black;
-        //}
+        backgroundImage2.gameObject.SetActive(true);
+        backgroundImage2.color = turnController.Player1Turn() ? Color.white : Color.black;
+
         foreach (var message in messages)
         {
             message.text = messageForText;
@@ -177,8 +173,8 @@ public class PlayerInterface : MonoBehaviour
         }
 
         anim.SetTrigger("NewTurn");
-        Debug.Log(backgroundImage.color);
-        backgroundImage.color = turnController.Player1Turn() ? Color.white : Color.black;
+        Debug.Log(backgroundImage2.color);
+        backgroundImage2.color = turnController.Player1Turn() ? Color.white : Color.black;
     }
     #endregion
 }

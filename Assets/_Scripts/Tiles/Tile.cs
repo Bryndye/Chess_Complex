@@ -102,6 +102,7 @@ public class Tile : MonoBehaviour
                 playerManager.AddCard(_card);
                 playerManager.AddScoreToPlayer(1);
                 _event.TriggerEventUI(MyType, _card);
+                _event.AddCardUI(_card);
                 break;
 
             case TileType.Event:

@@ -58,6 +58,11 @@ public class EventsManager : MonoBehaviour
         IsShoping = false;
     }
 
+    public void AddCardUI(Card _card)
+    {
+        playerInterface.AddCardContainer(_card, true);
+    }
+
     private void ClearContainer()
     {
         int childCount = shopContainerCards.childCount;
