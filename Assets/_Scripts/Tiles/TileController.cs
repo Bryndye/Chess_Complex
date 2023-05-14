@@ -156,6 +156,7 @@ public class TileController : MonoBehaviour
         if (currentCard.DiagonaleMovement)
         {
             //PorteeDiagonale(currentPlayer.MyPlayer, currentCard, previsualisation);
+            GetDiagonalLine(currentPlayer.MyPlayer.currentTile, _end);
         }
         if (currentCard.KnightMovement)
         {
@@ -591,7 +592,7 @@ public class TileController : MonoBehaviour
         }
     }
 
-    public List<Tile> GetLine(Tile start, Tile end)
+    public void GetLine(Tile start, Tile end)
     {
         List<Tile> lineTiles = new List<Tile>();
 
@@ -612,10 +613,44 @@ public class TileController : MonoBehaviour
             if (e2 > -dx) { err -= dy; start.MyPosition.x += sx; }
             if (e2 < dy) { err += dx; start.MyPosition.y += sy; }
         }
-
-        return lineTiles;
     }
 
+    public void GetDiagonalLine(Tile start, Tile end)
+    {
+        List<Tile> diagonalTiles = new List<Tile>();
+
+        int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x);
+        int dy = Math.Abs((int)end.MyPosition.y - (int)start.MyPosition.y);
+        int sx = start.MyPosition.x < end.MyPosition.x ? 1 : -1;
+        int sy = start.MyPosition.y < end.MyPosition.y ? 1 : -1;
+        int err = dx - dy;
+        int e2;
+
+        while (true)
+        {
+            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
+            if (currentTile != null)
+            {
+                diagonalTiles.Add(currentTile);
+                currentTile.SetValueToShader("_Show", 1);
+            }
+
+            if (start.MyPosition.x == end.MyPosition.x && start.MyPosition.y == end.MyPosition.y)
+                break;
+
+            e2 = 2 * err;
+            if (e2 > -dy)
+            {
+                err -= dy;
+                start.MyPosition.x += sx;
+            }
+            if (e2 < dx)
+            {
+                err += dx;
+                start.MyPosition.y += sy;
+            }
+        }
+    }
 
     #endregion
 
