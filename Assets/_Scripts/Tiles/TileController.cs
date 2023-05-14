@@ -60,7 +60,7 @@ public class TileController : MonoBehaviour
 
         int randomIndex = UnityEngine.Random.Range(0, tilesEvent.Count() - 1);
         Tile tileKey = tilesEvent[randomIndex];
-        Debug.Log(tileKey + " has key");
+        //Debug.Log(tileKey + " has key");
         tileKey.MyType = TileType.Key;
 
 

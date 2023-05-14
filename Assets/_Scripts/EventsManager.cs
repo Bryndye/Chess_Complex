@@ -102,6 +102,8 @@ public class EventsManager : MonoBehaviour
                 var tile2 = turnController.playerManager2.MyPlayer.currentTile;
                 turnController.playerManager1.MyPlayer.SetItemOnTile(tile2);
                 turnController.playerManager2.MyPlayer.SetItemOnTile(tile1);
+                tile1.PlaceTaken = true;
+                tile2.PlaceTaken = true;
                 break;
             case EventRedType.ArmadaRouge:
                 Debug.Log("ARMADA ROUGE");
@@ -122,14 +124,6 @@ public class EventsManager : MonoBehaviour
     {
         var _armada = Instantiate(prefabArmadaRouge);
         TileController _tileC = TileController.instance;
-        //foreach (Tile _tile in _tileC.tiles)
-        //{
-        //    if (!_tile.PlaceTaken)
-        //    {
-        //        _armada.SetItemOnTile(_tile);
-        //        break;
-        //    }
-        //}
         System.Random random = new System.Random();
         Tile selectedTile;
         int attempts = 0;

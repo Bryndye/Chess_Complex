@@ -21,7 +21,7 @@ public class ArmadaRouge : PlayerController
 
     private void Update()
     {
-        if (TurnCreation - turnController.TurnCount > 0)
+        if (turnController.TurnCount - TurnCreation > 0)
         {
             Destroy(gameObject);
         }

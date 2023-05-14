@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anchorCamera: {fileID: 8913431488173905411}
   mainCamera: {fileID: 8913431489148587338}
-  verticalSpeed: 30
+  verticalSpeed: 10
   minDistanceVertical: -1
   maxDistanceVertical: 2
   rotationSpeed: 70
@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 8913431489148587339}
   - component: {fileID: 8913431489148587336}
   - component: {fileID: 8913431489148587341}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

@@ -117,6 +117,15 @@ MonoBehaviour:
   cardsContainer: {fileID: 0}
   playerManager1: {fileID: 259703937}
   playerManager2: {fileID: 259703936}
+  gameObjectEventUI: {fileID: 0}
+  anim: {fileID: 0}
+  messages:
+  - {fileID: 0}
+  - {fileID: 0}
+  imageCard: {fileID: 0}
+  backgroundImage: {fileID: 0}
+  backgroundImage2: {fileID: 0}
+  keySprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!114 &259703939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,7 +145,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
   - {fileID: 11400000, guid: 68b44a5785c1c5d479242c25d3c721a6, type: 2}
   - {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20, type: 2}
+  IsShoping: 0
   cardShoPrefab: {fileID: 4699806381107424473, guid: 7f827f1894688764ab24a0b7dac08fad,
     type: 3}
   shopInterface: {fileID: 0}
   shopContainerCards: {fileID: 0}
+  spritesRedEvent:
+  - {fileID: 21300000, guid: 3e007d5061a0910418b779bdb6bfe402, type: 3}
+  - {fileID: 21300000, guid: ba7348131e01d6b4eb60b1a59466b6b9, type: 3}
+  prefabArmadaRouge: {fileID: 8548099561633056932, guid: eca09d354af3e4541a7930c71761ea4c,
+    type: 3}
