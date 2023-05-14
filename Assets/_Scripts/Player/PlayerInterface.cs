@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,7 +32,7 @@ public class PlayerInterface : MonoBehaviour
         {
             turnController = _turnController;
         }
-        Debug.Log(turnController);
+
         if (turnController.Player1Turn())
         {
             ClearCardsContainer();
@@ -102,4 +104,82 @@ public class PlayerInterface : MonoBehaviour
             child.DisableCard();
         }
     }
+
+    #region Event UI
+    [Header("UI")]
+    [SerializeField] private GameObject gameObjectEventUI;
+    [SerializeField] private Animator anim;
+    [SerializeField] private TextMeshProUGUI[] messages;
+    [SerializeField] private Image imageCard;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Sprite keySprite;
+    private object textMeshPro;
+
+    public void TriggerEventUI(TileType _tile, Card _card = null)
+    {
+        gameObjectEventUI.SetActive(true);
+        string messageForText = "";
+        switch (_tile)
+        {
+            case TileType.NoEvent:
+                break;
+            case TileType.RandomCard:
+                anim.SetTrigger("RandomCard");
+                messageForText = "You receive : \n" + _card.name + " card!";
+                imageCard.sprite = _card.FrontSprite[turnController.Player1Turn() ? 0 : 1];
+                break;
+            case TileType.Shop:
+                break;
+            case TileType.Event:
+                anim.SetTrigger("EventRedCard");
+                messageForText = "You trigger an event!";
+                break;
+            case TileType.Key:
+                anim.SetTrigger("Key");
+                messageForText = "You obtained the key!";
+                imageCard.sprite = keySprite;
+                break;
+            case TileType.Out:
+                break;
+            default:
+                break;
+        }
+        foreach (var message in messages)
+        {
+            message.text = messageForText;
+        }
+    }
+
+    public void NextTurnUI()
+    {
+        string messageForText = turnController.Player1Turn() ? "Player 1 Turn" : "Player 2 Turn";
+        gameObjectEventUI.SetActive(true);
+        backgroundImage.color = turnController.Player1Turn() ? Color.white : Color.black;
+        //if (turnController.Player1Turn())
+        //{
+        //    backgroundImage.color = Color.white;
+        //}
+        //else
+        //{
+        //    backgroundImage.color = Color.black;
+        //}
+        foreach (var message in messages)
+        {
+            message.text = messageForText;
+            Debug.Log(turnController.Player1Turn());
+            if (turnController.Player1Turn())
+            {
+                message.color = Color.black;
+            }
+            else
+            {
+                message.color = Color.white;
+            }
+        }
+
+        anim.SetTrigger("NewTurn");
+        Debug.Log(backgroundImage.color);
+        backgroundImage.color = turnController.Player1Turn() ? Color.white : Color.black;
+    }
+    #endregion
 }

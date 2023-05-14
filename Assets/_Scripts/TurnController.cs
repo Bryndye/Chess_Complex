@@ -76,5 +76,6 @@ public class TurnController : MonoBehaviour
         turnCountText.text = TurnCount.ToString();
 
         playerInterface.NextTurnSetInterface(this);
+        playerInterface.NextTurnUI();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -71,5 +72,10 @@ public class EventsManager : MonoBehaviour
     public void Event()
     {
 
+    }
+
+    public void TriggerEventUI(TileType _tile, Card _card = null)
+    {
+        playerInterface.TriggerEventUI(_tile, _card);
     }
 }

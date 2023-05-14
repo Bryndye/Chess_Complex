@@ -64,32 +64,38 @@ public class Tile : MonoBehaviour
         EffectUsed = true;
         myMeshRenderer.material.SetInt("_Show", 1);
 
+        var _event = EventsManager.Instance;
         switch (MyType)
         {
             case TileType.NoEvent:
                 break;
             case TileType.RandomCard:
-                playerManager.AddCard(EventsManager.Instance.RandomCard());
+                Card _card = _event.RandomCard();
+                playerManager.AddCard(_card);
                 myMeshRenderer.material.SetTexture("_TextureShow", textureRandomCard);
                 playerManager.AddScoreToPlayer(1);
+                _event.TriggerEventUI(MyType, _card);
                 break;
+
             case TileType.Event:
-                Debug.Log(playerManager.gameObject + " triggers EVENT");
-                EventsManager.Instance.Event();
+                _event.Event();
                 myMeshRenderer.material.SetTexture("_TextureShow", textureEvent);
                 playerManager.AddScoreToPlayer(2);
+                _event.TriggerEventUI(MyType);
                 break;
+
             case TileType.Shop:
-                Debug.Log(playerManager.gameObject + " shop!");
-                EventsManager.Instance.SetShop();
+                _event.SetShop();
                 myMeshRenderer.material.SetTexture("_TextureShow", textureShop);
                 playerManager.AddScoreToPlayer(5);
+                _event.TriggerEventUI(MyType);
                 break;
+
             case TileType.Key:
-                Debug.Log(playerManager.Player + " gets the key!");
                 playerManager.GetKey();
                 myMeshRenderer.material.SetTexture("_TextureShow", textureKey);
                 playerManager.AddScoreToPlayer(20);
+                _event.TriggerEventUI(MyType);
                 break;
             default:
                 break;
