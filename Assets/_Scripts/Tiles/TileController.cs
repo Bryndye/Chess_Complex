@@ -605,23 +605,26 @@ public class TileController : MonoBehaviour
 
     public void GetLine(Tile start, Tile end)
     {
+        Vector2 currentPosition = start.MyPosition;
+
         int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x), sx = start.MyPosition.x < end.MyPosition.x ? 1 : -1;
         int dy = Math.Abs((int)end.MyPosition.y - (int)start.MyPosition.y), sy = start.MyPosition.y < end.MyPosition.y ? 1 : -1;
         int err = (dx > dy ? dx : -dy) / 2, e2;
 
         while (true)
         {
-            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
+            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == currentPosition.x && tile.MyPosition.y == currentPosition.y);
             if (currentTile != null)
             {
-                currentTile.SetValueToShader("_Show",1);
+                currentTile.SetValueToShader("_Show", 1);
             }
-            if (start.MyPosition.x == end.MyPosition.x && start.MyPosition.y == end.MyPosition.y) break;
+            if (currentPosition.x == end.MyPosition.x && currentPosition.y == end.MyPosition.y) break;
             e2 = err;
-            if (e2 > -dx) { err -= dy; start.MyPosition.x += sx; }
-            if (e2 < dy) { err += dx; start.MyPosition.y += sy; }
+            if (e2 > -dx) { err -= dy; currentPosition.x += sx; }
+            if (e2 < dy) { err += dx; currentPosition.y += sy; }
         }
     }
+
 
     public void GetDiagonalLine(Tile start, Tile end)
     {
