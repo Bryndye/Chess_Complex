@@ -177,6 +177,7 @@ public class TileController : MonoBehaviour
     #region CalculatePortee
     public void CalculatePortee(PlayerController playerController, Card _card, bool previsualisation = false)
     {
+        ResetMovementParameter();
         if (_card.CircleMovement)
         {
             PorteeSquare(playerController, _card, previsualisation);
@@ -631,29 +632,36 @@ public class TileController : MonoBehaviour
         int err = dx - dy;
         int e2;
 
+        Vector2 currentPosition = start.MyPosition;
+
         while (true)
         {
-            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == start.MyPosition.x && tile.MyPosition.y == start.MyPosition.y);
+            Tile currentTile = Array.Find(tiles, tile => tile.MyPosition.x == currentPosition.x && tile.MyPosition.y == currentPosition.y);
             if (currentTile != null)
             {
                 currentTile.SetValueToShader("_Show", 1);
             }
 
-            if (start.MyPosition.x == end.MyPosition.x && start.MyPosition.y == end.MyPosition.y)
+            if (currentPosition.x == end.MyPosition.x && currentPosition.y == end.MyPosition.y)
                 break;
 
             e2 = 2 * err;
             if (e2 > -dy)
             {
+                Debug.Log(currentPosition.x);
                 err -= dy;
-                start.MyPosition.x += sx;
+                currentPosition.x += sx;
             }
             if (e2 < dx)
             {
+                Debug.Log(currentPosition.y);
                 err += dx;
-                start.MyPosition.y += sy;
+                currentPosition.y += sy;
             }
         }
+
+        Debug.Log(start.MyPosition);
+
     }
 
     #endregion

@@ -66,19 +66,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureHasBeenDiscovering:
-        m_Texture: {fileID: 2800000, guid: a29d9cceacb6c234f812a3910f9e5cee, type: 3}
+        m_Texture: {fileID: 2800000, guid: a0e0e4cf44a48504b87f2476cde90730, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureOut:
-        m_Texture: {fileID: 2800000, guid: 0ce4c9b0a4ef4b143b7d6132ba6818e1, type: 3}
+        m_Texture: {fileID: 2800000, guid: b0e3980d0e1271045a46740fa75f3eb8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureShow:
-        m_Texture: {fileID: 2800000, guid: 0577de2a865ed0a4da5257bd0409ae62, type: 3}
+        m_Texture: {fileID: 2800000, guid: a29d9cceacb6c234f812a3910f9e5cee, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureTile:
-        m_Texture: {fileID: 2800000, guid: 72a8b07a34276ab449fcda0b23afe859, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8e4e333fafcd0c440886455f33492fa2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
