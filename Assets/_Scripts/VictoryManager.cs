@@ -80,17 +80,17 @@ public class VictoryManager : MonoBehaviour
         {
             foreach (var tile in tileController.tilesOut)
             {
-                if (playerManager1.MyPlayer.currentTile == tile)
+                if (_pm == playerManager1 && playerManager1.MyPlayer.currentTile == tile)
                 {
                     Debug.Log(playerManager1.Player + " win this round!");
                     EndRound();
                 }
-                else if (playerManager2.MyPlayer.currentTile == tile)
+                else if (_pm == playerManager2 && playerManager2.MyPlayer.currentTile == tile)
                 {
                     Debug.Log(playerManager2.Player + " win this round!");
+                    EndRound();
                 }
             }
-            EndRound();
         }
     }
 
@@ -108,6 +108,8 @@ public class VictoryManager : MonoBehaviour
         eventKeyStarted = false;
         Score1 += playerManager1.Score;
         Score2 += playerManager2.Score;
+        playerManager1.HasKey = false;
+        playerManager2.HasKey = false;
         if (Score1 > Score2)
         {
             Round1++;
@@ -119,12 +121,12 @@ public class VictoryManager : MonoBehaviour
 
         SetInterfaceEndScreen();
 
-        if (Round1 >= scoreMax)
+        if (Round1 >= 3)
         {
             playerInterface.buttonNextRound.gameObject.SetActive(true);
             EndGame("Player 1");
         }
-        else if(Round2 >= scoreMax)
+        else if(Round2 >= 3)
         {
             playerInterface.buttonNextRound.gameObject.SetActive(true);
             EndGame("Player 2");
@@ -145,6 +147,7 @@ public class VictoryManager : MonoBehaviour
     {
         //Debug.LogError("LOAD SCENE NEXT FRAME");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        eventKeyStarted = false;
     }
 
     private void EndGame(string _who)
