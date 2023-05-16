@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,7 +46,8 @@ public class PlayerInterface : MonoBehaviour
     public void SetCardsContainer(PlayerManager playerManager)
     {
         List<Card> _cards = playerManager.MyCards;
-        foreach (Card card in _cards) {
+        foreach (Card card in _cards)
+        {
             var cardInstance = Instantiate(cardPrefab, cardsContainer);
             cardInstance.Initialize(playerManager, card, turnController);
         }
@@ -143,7 +142,7 @@ public class PlayerInterface : MonoBehaviour
                 anim.SetTrigger("EventRedCard");
                 messageForText = "You trigger an event!\n" + _card.name;
                 backgroundImage2.gameObject.SetActive(true);
-                backgroundImage2.color = new Color32(180,55,55,255);
+                backgroundImage2.color = new Color32(180, 55, 55, 255);
                 imageCard.sprite = _card.FrontSprite[0];
                 break;
             case TileType.Key:
