@@ -106,7 +106,6 @@ public class EventsManager : MonoBehaviour
                 tile2.PlaceTaken = true;
                 break;
             case EventRedType.ArmadaRouge:
-                Debug.Log("ARMADA ROUGE");
                 int _pawnsToSpawn = turnController.TurnCount <= 5 ? turnController.TurnCount : 5;
                 for (int i = 0; i < _pawnsToSpawn; ++i)
                 {
@@ -137,6 +136,7 @@ public class EventsManager : MonoBehaviour
         while (selectedTile.PlaceTaken && attempts < 10); // Remplacez IsOccupied par la méthode/propriété correcte
 
         // Utilisez la position de la tuile sélectionnée pour créer le pion
+        _armada.Initialize();
         _armada.SetItemOnTile(selectedTile);
     }
 

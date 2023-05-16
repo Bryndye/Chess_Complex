@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,7 @@ public class VictoryManager : MonoBehaviour
 {
     public static VictoryManager instance;
     [SerializeField] private TileController tileController;
+    [SerializeField] private PlayerInterface playerInterface;
 
     [SerializeField] private PlayerManager playerManager1;
     [SerializeField] private PlayerManager playerManager2;
@@ -15,6 +17,8 @@ public class VictoryManager : MonoBehaviour
     [SerializeField] private int scoreMax = 100;
     [SerializeField] private int Score1 = 0;
     [SerializeField] private int Score2 = 0;
+    [SerializeField] private int Round1 = 0;
+    [SerializeField] private int Round2 = 0;
 
     public bool eventKeyStarted = false;
 
@@ -51,6 +55,10 @@ public class VictoryManager : MonoBehaviour
         if (tileController == null)
         {
             tileController = TileController.instance;
+        }
+        if (playerInterface == null)
+        {
+            playerInterface = PlayerInterface.instance;
         }
     }
 
@@ -100,16 +108,41 @@ public class VictoryManager : MonoBehaviour
         eventKeyStarted = false;
         Score1 += playerManager1.Score;
         Score2 += playerManager2.Score;
-        Debug.Log("END ROUND");
+        if (Score1 > Score2)
+        {
+            Round1++;
+        }
+        else
+        {
+            Round2++;
+        }
 
-        if (Score1 >= scoreMax)
+        SetInterfaceEndScreen();
+
+        if (Round1 >= scoreMax)
         {
-            EndGame("p1");
+            playerInterface.buttonNextRound.gameObject.SetActive(true);
+            EndGame("Player 1");
         }
-        else if(Score2 >= scoreMax)
+        else if(Round2 >= scoreMax)
         {
-            EndGame("p2");
+            playerInterface.buttonNextRound.gameObject.SetActive(true);
+            EndGame("Player 2");
         }
+    }
+
+    private void SetInterfaceEndScreen()
+    {
+        playerInterface.endScreen.SetActive(true);
+        playerInterface.scoreP1.text = Score1.ToString();
+        playerInterface.scoreP2.text = Score2.ToString();
+        playerInterface.RoundP1.text = Round1.ToString();
+        playerInterface.RoundP2.text = Round2.ToString();
+        playerInterface.buttonNextRound.onClick.AddListener(GoToNextRound);
+    }
+
+    public void GoToNextRound()
+    {
         //Debug.LogError("LOAD SCENE NEXT FRAME");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -117,5 +150,7 @@ public class VictoryManager : MonoBehaviour
     private void EndGame(string _who)
     {
         Debug.Log("END GAME " + _who);
+        playerInterface.buttonEndGame.gameObject.SetActive(true);
+        playerInterface.buttonEndGame.GetComponentInChildren<TextMeshProUGUI>().text = _who;
     }
 }

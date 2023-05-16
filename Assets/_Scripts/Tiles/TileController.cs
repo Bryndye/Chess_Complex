@@ -62,7 +62,7 @@ public class TileController : MonoBehaviour
         Tile tileKey = tilesEvent[randomIndex];
         //Debug.Log(tileKey + " has key");
         tileKey.MyType = TileType.Key;
-
+        tileKey.SetTexture();
 
         int shopCount = 0;
         int randomCardCount = 0;
@@ -132,12 +132,12 @@ public class TileController : MonoBehaviour
                         {
                             DiscoverTiles(_tile);
                         }
-                        playerManager.MyPlayer.SetItemOnTile(_tile);
-                        if (currentCard.KnightMovement)
+                        else
                         {
+                            playerManager.MyPlayer.currentTile = _tile;
                             DiscoverTiles(_tile);
                         }
-
+                        playerManager.MyPlayer.SetItemOnTile(_tile);
                         ResetTile();
                         TilesListMvtPossible.Clear();
                         ResetMovementParameter();
@@ -625,7 +625,6 @@ public class TileController : MonoBehaviour
         }
     }
 
-
     public void GetDiagonalLine(Tile start, Tile end)
     {
         int dx = Math.Abs((int)end.MyPosition.x - (int)start.MyPosition.x);
@@ -651,20 +650,15 @@ public class TileController : MonoBehaviour
             e2 = 2 * err;
             if (e2 > -dy)
             {
-                Debug.Log(currentPosition.x);
                 err -= dy;
                 currentPosition.x += sx;
             }
             if (e2 < dx)
             {
-                Debug.Log(currentPosition.y);
                 err += dx;
                 currentPosition.y += sy;
             }
         }
-
-        Debug.Log(start.MyPosition);
-
     }
 
     #endregion

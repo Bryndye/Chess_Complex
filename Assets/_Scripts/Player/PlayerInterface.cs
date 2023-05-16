@@ -115,6 +115,15 @@ public class PlayerInterface : MonoBehaviour
     [SerializeField] private Image backgroundImage2;
     [SerializeField] private Sprite keySprite;
 
+    [Header("Interface")]
+    public GameObject endScreen;
+    public Button buttonNextRound;
+    public Button buttonEndGame;
+    public TextMeshProUGUI scoreP1;
+    public TextMeshProUGUI scoreP2;
+    public TextMeshProUGUI RoundP1;
+    public TextMeshProUGUI RoundP2;
+
     public void TriggerEventUI(TileType _tile, Card _card = null)
     {
         gameObjectEventUI.SetActive(true);

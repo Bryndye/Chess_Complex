@@ -70,11 +70,9 @@ MonoBehaviour:
   Player: 0
   MyPlayer: {fileID: 0}
   MyCards:
-  - {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20, type: 2}
   - {fileID: 11400000, guid: f65b534140e5fb3458f83233aeabd454, type: 2}
   - {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20, type: 2}
   - {fileID: 11400000, guid: e395aa8b97b08e24ea6db67bc2b7effa, type: 2}
-  - {fileID: 11400000, guid: f65b534140e5fb3458f83233aeabd454, type: 2}
   - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
   HasPlayedMovement: 0
   Score: 0
@@ -94,8 +92,9 @@ MonoBehaviour:
   Player: 1
   MyPlayer: {fileID: 0}
   MyCards:
+  - {fileID: 11400000, guid: f65b534140e5fb3458f83233aeabd454, type: 2}
   - {fileID: 11400000, guid: e55defd3ee1978d41969d0ab70b43e20, type: 2}
-  - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
+  - {fileID: 11400000, guid: e395aa8b97b08e24ea6db67bc2b7effa, type: 2}
   - {fileID: 11400000, guid: f54bf57a3bfcba34684999fa9832554d, type: 2}
   HasPlayedMovement: 0
   Score: 0
@@ -126,6 +125,13 @@ MonoBehaviour:
   backgroundImage: {fileID: 0}
   backgroundImage2: {fileID: 0}
   keySprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  endScreen: {fileID: 0}
+  buttonNextRound: {fileID: 0}
+  buttonEndGame: {fileID: 0}
+  scoreP1: {fileID: 0}
+  scoreP2: {fileID: 0}
+  RoundP1: {fileID: 0}
+  RoundP2: {fileID: 0}
 --- !u!114 &259703939
 MonoBehaviour:
   m_ObjectHideFlags: 0
